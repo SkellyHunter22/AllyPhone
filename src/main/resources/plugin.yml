@@ -1,0 +1,16 @@
+name: AllyPhone
+main: com.allyphone.AllyPhonePlugin
+version: 1.0
+api-version: 1.20
+author: SkellyHunter22
+softdepend: [AlsBanker, Vault]
+
+commands:
+  phone:
+    description: Open your AllyPhone
+  sms:
+    description: Send an SMS
+  phonenews:
+    description: Post city news
+  celltower:
+    description: Manage cell towers
