@@ -28,10 +28,15 @@ public final class PhoneItem {
     }
 
     public static ItemStack create(Plugin plugin) {
+        return create(plugin, null);
+    }
+
+    /** Same as {@link #create(Plugin)} but with a player-chosen nickname, or the default name if null/blank. */
+    public static ItemStack create(Plugin plugin, String nickname) {
         ItemStack item = new ItemStack(Material.PAPER);
         ItemMeta meta = item.getItemMeta();
 
-        meta.setDisplayName("§f§lAllyPhone 67 Pro Max");
+        meta.setDisplayName(nickname != null && !nickname.isBlank() ? "§f§l" + nickname : "§f§lAllyPhone 67 Pro Max");
         meta.setLore(baseLore());
         meta.setCustomModelData(CUSTOM_MODEL_DATA);
         meta.getPersistentDataContainer().set(key(plugin), PersistentDataType.BYTE, (byte) 1);

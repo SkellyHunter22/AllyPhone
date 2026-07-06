@@ -5,8 +5,10 @@ import com.allyphone.api.AppRegistry;
 import com.allyphone.api.BankingService;
 import com.allyphone.api.CompositeBankingService;
 import com.allyphone.api.VaultBankingService;
+import com.allyphone.apps.AdminApp;
 import com.allyphone.apps.AlertsApp;
 import com.allyphone.apps.AppStoreApp;
+import com.allyphone.apps.CustomizeApp;
 import com.allyphone.apps.ExtrasApp;
 import com.allyphone.apps.FriendsApp;
 import com.allyphone.apps.HelpApp;
@@ -32,6 +34,7 @@ import com.allyphone.commands.SmsCommand;
 import com.allyphone.discord.DiscordWebhook;
 import com.allyphone.listeners.GuiClickListener;
 import com.allyphone.listeners.JoinListener;
+import com.allyphone.listeners.PendingInputChatListener;
 import com.allyphone.listeners.RespawnListener;
 import com.allyphone.listeners.RightClickListener;
 import com.allyphone.listeners.SmsChatListener;
@@ -42,10 +45,13 @@ import com.allyphone.service.AlertService;
 import com.allyphone.service.AtmStore;
 import com.allyphone.service.BillingService;
 import com.allyphone.service.CellTowerStore;
+import com.allyphone.service.CellTowerVisualizer;
 import com.allyphone.service.MessageService;
 import com.allyphone.service.MonthlyBillingTask;
 import com.allyphone.service.NewsService;
+import com.allyphone.service.PendingInputService;
 import com.allyphone.service.PendingSmsService;
+import com.allyphone.service.PhoneCustomizationStore;
 import com.allyphone.service.PhoneService;
 import com.allyphone.service.PluginLogService;
 import com.allyphone.service.ServicePlanService;
@@ -87,7 +93,10 @@ public class AllyPhonePlugin extends JavaPlugin {
     private DiscordWebhook discordWebhook;
     private BankingService bankingService;
     private PendingSmsService pendingSmsService;
+    private PendingInputService pendingInputService;
+    private PhoneCustomizationStore phoneCustomizationStore;
     private TowerMapIntegration towerMapIntegration;
+    private CellTowerVisualizer cellTowerVisualizer;
 
     private BukkitTask statusBarTask;
     private BukkitTask billingTask;
@@ -119,6 +128,7 @@ public class AllyPhonePlugin extends JavaPlugin {
         cellTowerStore = new CellTowerStore(database);
         atmStore = new AtmStore(database);
         installedAppsStore = new InstalledAppsStore(database);
+        phoneCustomizationStore = new PhoneCustomizationStore(database);
         discordWebhook = new DiscordWebhook(this);
 
         phoneService = new PhoneService();
@@ -128,7 +138,9 @@ public class AllyPhonePlugin extends JavaPlugin {
         newsService = new NewsService(this, newsSqlService);
         alertService = new AlertService(this, alertSqlService);
         pendingSmsService = new PendingSmsService();
+        pendingInputService = new PendingInputService();
         towerMapIntegration = new TowerMapIntegration(this);
+        cellTowerVisualizer = new CellTowerVisualizer(this);
 
         setupBanking();
         setupApps();
@@ -148,6 +160,7 @@ public class AllyPhonePlugin extends JavaPlugin {
         if (statusBarTask != null) statusBarTask.cancel();
         if (billingTask != null) billingTask.cancel();
         if (signalDebugTask != null) signalDebugTask.cancel();
+        if (cellTowerVisualizer != null) cellTowerVisualizer.shutdown();
         if (database != null) database.close();
         getLogger().info("AllyPhone disabled.");
     }
@@ -202,6 +215,8 @@ public class AllyPhonePlugin extends JavaPlugin {
         appRegistry.registerApp(new QuestsApp());
         appRegistry.registerApp(new MusicApp());
         appRegistry.registerApp(new HelpApp());
+        appRegistry.registerApp(new CustomizeApp());
+        appRegistry.registerApp(new AdminApp());
     }
 
     private void registerListeners() {
@@ -211,6 +226,7 @@ public class AllyPhonePlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new GuiClickListener(this), this);
         getServer().getPluginManager().registerEvents(new TowerPatternListener(this), this);
         getServer().getPluginManager().registerEvents(new SmsChatListener(this), this);
+        getServer().getPluginManager().registerEvents(new PendingInputChatListener(this), this);
     }
 
     private void registerCommands() {
@@ -306,7 +322,19 @@ public class AllyPhonePlugin extends JavaPlugin {
         return pendingSmsService;
     }
 
+    public PendingInputService getPendingInputService() {
+        return pendingInputService;
+    }
+
+    public PhoneCustomizationStore getPhoneCustomizationStore() {
+        return phoneCustomizationStore;
+    }
+
     public TowerMapIntegration getTowerMapIntegration() {
         return towerMapIntegration;
+    }
+
+    public CellTowerVisualizer getCellTowerVisualizer() {
+        return cellTowerVisualizer;
     }
 }

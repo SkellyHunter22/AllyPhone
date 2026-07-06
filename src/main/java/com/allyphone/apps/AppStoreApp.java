@@ -36,6 +36,11 @@ public class AppStoreApp implements PhoneApp {
     }
 
     @Override
+    public boolean isEssential() {
+        return true;
+    }
+
+    @Override
     public void open(Player player) {
         AllyPhonePlugin plugin = AllyPhonePlugin.get();
 
@@ -53,8 +58,17 @@ public class AppStoreApp implements PhoneApp {
         int slot = 0;
         for (PhoneApp app : plugin.getAppRegistry().getAllApps()) {
             if (app.getId().equals("appstore") || slot >= 36) continue;
+            if (app.requiredPermission() != null && !player.hasPermission(app.requiredPermission())) continue;
 
             boolean isInstalled = installed.contains(app.getId().toLowerCase());
+            if (app.isEssential()) {
+                ItemStack icon = GuiUtil.icon(Material.LIME_WOOL,
+                        app.getDisplayName(),
+                        "§aInstalled §7(core app)",
+                        "§8Cannot be uninstalled");
+                inv.setItem(slot++, icon);
+                continue;
+            }
             ItemStack icon = GuiUtil.icon(isInstalled ? Material.LIME_WOOL : Material.RED_WOOL,
                     app.getDisplayName(),
                     isInstalled ? "§aInstalled" : "§7Not installed",

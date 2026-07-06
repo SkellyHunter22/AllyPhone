@@ -7,10 +7,22 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.sql.SQLException;
+
 public class PhoneService {
 
     public ItemStack createPhoneItem() {
         return PhoneItem.create(AllyPhonePlugin.get());
+    }
+
+    public ItemStack createPhoneItem(Player player) {
+        AllyPhonePlugin plugin = AllyPhonePlugin.get();
+        try {
+            String nickname = plugin.getPhoneCustomizationStore().getNickname(player.getUniqueId());
+            return PhoneItem.create(plugin, nickname);
+        } catch (SQLException e) {
+            return PhoneItem.create(plugin);
+        }
     }
 
     public boolean isPhone(ItemStack item) {
@@ -32,7 +44,7 @@ public class PhoneService {
 
     public void deliverPhone(Player player) {
         if (!hasPhone(player)) {
-            ItemStack phone = createPhoneItem();
+            ItemStack phone = createPhoneItem(player);
 
             if (player.getInventory().getItem(8) == null) {
                 player.getInventory().setItem(8, phone);

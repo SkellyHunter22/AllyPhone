@@ -12,4 +12,14 @@ public interface PhoneApp {
     boolean requiresService();      // true = needs signal + paid bill
 
     void open(Player player);       // Open the app GUI
+
+    /** True if this app is a core system app and cannot be uninstalled by players. */
+    default boolean isEssential() {
+        return false;
+    }
+
+    /** Permission required to see/use this app at all (e.g. an admin-only app), or null if anyone can. */
+    default String requiredPermission() {
+        return null;
+    }
 }

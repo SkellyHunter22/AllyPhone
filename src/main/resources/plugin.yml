@@ -7,7 +7,8 @@ softdepend: [AlsBanker, Vault, PlaceholderAPI, Towny, BlueMap, EcoJobs, GPet, GM
 
 commands:
   phone:
-    description: Open your AllyPhone
+    description: Open your AllyPhone, or get one with '/phone get' if you don't have it
+    usage: /phone [get]
   sms:
     description: Send an SMS
     usage: /sms <player> <message>
@@ -36,4 +37,6 @@ permissions:
   allyphone.atm:
     default: op
   allyphone.alert.push:
+    default: op
+  allyphone.admin:
     default: op

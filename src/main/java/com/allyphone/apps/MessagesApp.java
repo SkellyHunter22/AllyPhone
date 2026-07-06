@@ -33,6 +33,11 @@ public class MessagesApp implements PhoneApp {
     }
 
     @Override
+    public boolean isEssential() {
+        return true;
+    }
+
+    @Override
     public void open(Player player) {
         MessagesGUI.open(player);
     }

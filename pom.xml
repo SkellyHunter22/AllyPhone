@@ -61,7 +61,7 @@
         <dependency>
             <groupId>com.alexander</groupId>
             <artifactId>alsbanker</artifactId>
-            <version>0.6</version>
+            <version>0.9b</version>
             <scope>provided</scope>
         </dependency>
 
@@ -85,6 +85,14 @@
             <groupId>de.bluecolored.bluemap</groupId>
             <artifactId>bluemap-api</artifactId>
             <version>3.14</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- GPet, for the Pets app -->
+        <dependency>
+            <groupId>dev.geco</groupId>
+            <artifactId>gpet</artifactId>
+            <version>1.15.2</version>
             <scope>provided</scope>
         </dependency>
 

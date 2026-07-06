@@ -67,4 +67,20 @@ public class AlsBankingService implements BankingService {
                         t.getDescription()))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public SavingsSummary getSavingsSummary(Player player) {
+        com.alexander.alsbanker.api.SavingsInfo info = api.getSavingsInfo(player.getUniqueId());
+        if (!info.available()) {
+            return SavingsSummary.NONE;
+        }
+        return new SavingsSummary(true, info.balance(), info.dailyInterestRate());
+    }
+
+    @Override
+    public List<StockHolding> getStockHoldings(Player player) {
+        return api.getStockPortfolio(player.getUniqueId()).stream()
+                .map(h -> new StockHolding(h.symbol(), (int) Math.round(h.shares()), h.avgCost(), h.currentPrice()))
+                .collect(Collectors.toList());
+    }
 }

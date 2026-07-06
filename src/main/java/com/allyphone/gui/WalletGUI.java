@@ -45,7 +45,7 @@ public class WalletGUI {
             if (savings.available()) {
                 inv.setItem(14, GuiUtil.icon(Material.EMERALD, "§b§lSavings",
                         "§f$" + String.format("%,.2f", savings.balance()),
-                        "§7APR: " + String.format("%.1f", savings.annualInterestRate() * 100) + "%"));
+                        "§7Daily interest: " + String.format("%.1f", savings.annualInterestRate() * 100) + "%"));
             } else {
                 inv.setItem(14, GuiUtil.icon(Material.EMERALD, "§7Savings",
                         "§8Not available yet - coming soon via AlsBanker."));

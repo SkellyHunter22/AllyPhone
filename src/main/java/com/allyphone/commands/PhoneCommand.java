@@ -20,6 +20,16 @@ public class PhoneCommand implements CommandExecutor {
             sender.sendMessage("Only players can use this command.");
             return true;
         }
+
+        if (args.length > 0 && args[0].equalsIgnoreCase("get")) {
+            if (plugin.getPhoneService().hasPhone(player)) {
+                player.sendMessage("§eYou already have an AllyPhone.");
+            } else {
+                plugin.getPhoneService().deliverPhone(player);
+            }
+            return true;
+        }
+
         plugin.getPhoneService().openPhone(player);
         return true;
     }

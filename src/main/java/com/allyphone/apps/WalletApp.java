@@ -30,6 +30,11 @@ public class WalletApp implements PhoneApp {
     }
 
     @Override
+    public boolean isEssential() {
+        return true;
+    }
+
+    @Override
     public void open(Player player) {
         WalletGUI.open(player);
     }

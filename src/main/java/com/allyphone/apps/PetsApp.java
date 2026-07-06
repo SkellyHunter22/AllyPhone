@@ -43,9 +43,17 @@ public class PetsApp implements PhoneApp {
         holder.setInventory(inv);
 
         if (present) {
-            inv.setItem(13, GuiUtil.tagged(plugin,
+            inv.setItem(10, GuiUtil.tagged(plugin,
                     GuiUtil.icon(Material.BONE, "§eBuy & Manage Pets", "§7Click to open GPet"),
                     GuiUtil.ACTION_KEY, "command:gpet gui"));
+            inv.setItem(13, GuiUtil.tagged(plugin,
+                    GuiUtil.icon(Material.CHEST, "§eMy Pets", "§7List your pets by ID", "§7and hide the ones you don't want out"),
+                    GuiUtil.ACTION_KEY, "mypets"));
+            inv.setItem(16, GuiUtil.tagged(plugin,
+                    GuiUtil.icon(Material.LEAD, "§eHide Pet", "§7Despawns your active pet",
+                            "§7You still own it and can respawn it",
+                            "§7any time, keeping its name and data."),
+                    GuiUtil.ACTION_KEY, "command:gpet remove"));
         } else {
             inv.setItem(13, GuiUtil.icon(Material.BARRIER, "§cGPet is not installed"));
         }

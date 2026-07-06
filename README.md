@@ -16,7 +16,9 @@ A Paper/Bukkit plugin that adds an in-game smartphone item to Minecraft, complet
   - `MessagesApp` — SMS-style messaging (`/sms`, or click a friend in Friends to compose in chat), SQL-backed history, notification badge.
   - `NewsApp` — city/server news feed (`/phonenews` to post), SQL-backed, broadcasts + optional Discord webhook.
   - `AlertsApp` — persistent per-player alert inbox; other plugins (e.g. AlsBanker) push into it via the console-only `/phonealert` bridge.
-  - `WalletApp` — balance, loans, transaction history, savings/stocks (once AlsBanker exposes those APIs), a one-click "Pay Bill Now" button, and a "Find Nearest ATM" locator.
+  - `WalletApp` — balance, loans, transaction history, savings/stocks (via AlsBanker), a one-click "Pay Bill Now" button, and a "Find Nearest ATM" locator.
+  - `CustomizeApp` — bezel theme, phone nickname, and home-screen app ordering.
+  - `AdminApp` (`allyphone.admin` only) — one-click buttons for this plugin's admin commands and common server-admin actions.
   - `WeatherApp` — in-world weather/forecast display.
   - `FriendsApp` — online players list; click one to compose an SMS.
   - `PlotsApp` — shows Towny plot/claim info (via PlaceholderAPI) when Towny is present, with claim/forsale/unclaim buttons; falls back to a generic PlotSquared notice otherwise.
@@ -24,7 +26,7 @@ A Paper/Bukkit plugin that adds an in-game smartphone item to Minecraft, complet
   - `ServersApp` — BungeeCord/Velocity server switcher (reads a `servers:` list from `config.yml`).
   - `TowerManagerApp` — lists/removes registered cell towers with distance info.
   - `JobsApp` — opens EcoJobs' own GUI.
-  - `PetsApp` — opens GPet's buy/manage GUI.
+  - `PetsApp` — opens GPet's buy/manage GUI, plus a "My Pets" screen (backed by GPet's own `PetService`) listing your currently-spawned pets by pet ID with a one-click hide/despawn action that keeps ownership, name, and data intact.
   - `QuestsApp` — opens the Quests plugin's GUI.
   - `MusicApp` — play/pause/skip/stop controls for GMusic.
   - `AppStoreApp` — install/uninstall optional apps (`InstalledAppsStore`).
@@ -58,7 +60,7 @@ A Paper/Bukkit plugin that adds an in-game smartphone item to Minecraft, complet
 | PlaceholderAPI | Optional — enables `%allyphone_*%` placeholders and Towny plot/town info |
 | Towny | Optional — powers TownyApp and PlotsApp's live town/plot info and commands |
 | EcoJobs | Optional — powers JobsApp |
-| GPet | Optional — powers PetsApp |
+| GPet | Optional — powers PetsApp, including a direct `PetService` API integration for "My Pets" (compiled against GPet 1.15.2, `provided` scope) |
 | GMusic | Optional — powers MusicApp |
 | Quests | Optional — powers QuestsApp |
 

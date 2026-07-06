@@ -41,6 +41,11 @@ public class AlertsApp implements PhoneApp {
     }
 
     @Override
+    public boolean isEssential() {
+        return true;
+    }
+
+    @Override
     public void open(Player player) {
         AllyPhonePlugin plugin = AllyPhonePlugin.get();
         PhoneGuiHolder holder = new PhoneGuiHolder();

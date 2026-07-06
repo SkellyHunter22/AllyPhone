@@ -5,6 +5,7 @@ import com.allyphone.api.PhoneApp;
 import com.allyphone.gui.AtmListGUI;
 import com.allyphone.gui.GuiUtil;
 import com.allyphone.gui.NoServiceGUI;
+import com.allyphone.gui.PetsListGUI;
 import com.allyphone.gui.PhoneGuiHolder;
 import com.allyphone.service.ServicePlan;
 import org.bukkit.entity.Player;
@@ -85,8 +86,18 @@ public class GuiClickListener implements Listener {
             payBill(player);
         } else if (action.equals("findatm")) {
             AtmListGUI.open(player);
+        } else if (action.equals("mypets")) {
+            PetsListGUI.open(player);
+        } else if (action.equals("togglecoverage")) {
+            toggleCoverage(player);
         } else if (action.startsWith("smsto:")) {
             promptSms(player, action.substring("smsto:".length()));
+        } else if (action.startsWith("settheme:")) {
+            setTheme(player, action.substring("settheme:".length()));
+        } else if (action.equals("renamephone")) {
+            promptRename(player);
+        } else if (action.startsWith("reorder:")) {
+            reorderApp(player, action.substring("reorder:".length()));
         }
     }
 
@@ -100,6 +111,79 @@ public class GuiClickListener implements Listener {
         player.closeInventory();
         plugin.getPendingSmsService().start(player.getUniqueId(), targetName);
         player.sendMessage("§bType your message to §e" + targetName + " §bin chat (or type 'cancel').");
+    }
+
+    private void setTheme(Player player, String themeName) {
+        try {
+            com.allyphone.service.PhoneCustomizationStore.Theme theme =
+                    com.allyphone.service.PhoneCustomizationStore.Theme.valueOf(themeName);
+            plugin.getPhoneCustomizationStore().setTheme(player.getUniqueId(), theme);
+        } catch (IllegalArgumentException | SQLException e) {
+            player.sendMessage("§cFailed to set theme.");
+        }
+        PhoneApp app = plugin.getAppRegistry().getApp("customize");
+        if (app != null) app.open(player);
+    }
+
+    private void promptRename(Player player) {
+        player.closeInventory();
+        player.sendMessage("§bType the new name for your phone in chat (or type 'cancel').");
+        plugin.getPendingInputService().await(player.getUniqueId(), text -> {
+            if (!player.isOnline()) return;
+            if (text.equalsIgnoreCase("cancel")) {
+                player.sendMessage("§7Rename cancelled.");
+                return;
+            }
+            String clean = org.bukkit.ChatColor.stripColor(text).trim();
+            if (clean.isEmpty()) {
+                player.sendMessage("§cThat name isn't valid.");
+                return;
+            }
+            if (clean.length() > 32) {
+                clean = clean.substring(0, 32);
+            }
+            try {
+                plugin.getPhoneCustomizationStore().setNickname(player.getUniqueId(), clean);
+                int slot = plugin.getPhoneService().findPhoneSlot(player);
+                if (slot >= 0) {
+                    player.getInventory().setItem(slot, plugin.getPhoneService().createPhoneItem(player));
+                }
+                player.sendMessage("§aYour phone is now named: " + clean);
+            } catch (SQLException e) {
+                player.sendMessage("§cFailed to rename your phone: " + e.getMessage());
+            }
+        });
+    }
+
+    private void reorderApp(Player player, String payload) {
+        int split = payload.lastIndexOf(':');
+        if (split < 0) return;
+        String appId = payload.substring(0, split);
+        String direction = payload.substring(split + 1);
+
+        try {
+            java.util.List<String> order = new java.util.ArrayList<>(
+                    plugin.getPhoneCustomizationStore().getAppOrder(player.getUniqueId()));
+            java.util.Set<String> installed = plugin.getInstalledAppsStore().getInstalled(player.getUniqueId());
+            order.removeIf(id -> !installed.contains(id) || id.equals("appstore"));
+            for (PhoneApp app : plugin.getAppRegistry().getAllApps()) {
+                String id = app.getId();
+                if (!id.equals("appstore") && installed.contains(id) && !order.contains(id)) {
+                    order.add(id);
+                }
+            }
+
+            int index = order.indexOf(appId);
+            int swapWith = direction.equals("up") ? index - 1 : index + 1;
+            if (index >= 0 && swapWith >= 0 && swapWith < order.size()) {
+                java.util.Collections.swap(order, index, swapWith);
+                plugin.getPhoneCustomizationStore().setAppOrder(player.getUniqueId(), order);
+            }
+        } catch (SQLException e) {
+            player.sendMessage("§cFailed to reorder apps: " + e.getMessage());
+        }
+        PhoneApp app = plugin.getAppRegistry().getApp("customize");
+        if (app != null) app.open(player);
     }
 
     private void payBill(Player player) {
@@ -119,6 +203,13 @@ public class GuiClickListener implements Listener {
     }
 
     private void toggleInstall(Player player, String appId, boolean install) {
+        PhoneApp target = plugin.getAppRegistry().getApp(appId);
+        if (!install && target != null && target.isEssential()) {
+            player.sendMessage("§c" + target.getDisplayName() + " §7is a core app and cannot be uninstalled.");
+            PhoneApp store = plugin.getAppRegistry().getApp("appstore");
+            if (store != null) store.open(player);
+            return;
+        }
         try {
             if (install) {
                 plugin.getInstalledAppsStore().install(player.getUniqueId(), appId);
@@ -129,6 +220,15 @@ public class GuiClickListener implements Listener {
             plugin.getLogger().warning("GuiClickListener: failed to update installed apps: " + e.getMessage());
         }
         PhoneApp app = plugin.getAppRegistry().getApp("appstore");
+        if (app != null) app.open(player);
+    }
+
+    private void toggleCoverage(Player player) {
+        boolean nowOn = plugin.getCellTowerVisualizer().toggle(player);
+        player.sendMessage(nowOn
+                ? "§aShowing cell coverage rings around you."
+                : "§7Coverage overlay hidden.");
+        PhoneApp app = plugin.getAppRegistry().getApp("towers");
         if (app != null) app.open(player);
     }
 

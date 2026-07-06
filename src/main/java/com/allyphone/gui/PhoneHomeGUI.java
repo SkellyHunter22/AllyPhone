@@ -3,6 +3,7 @@ package com.allyphone.gui;
 import com.allyphone.AllyPhonePlugin;
 import com.allyphone.api.PhoneApp;
 import com.allyphone.service.BillingService;
+import com.allyphone.service.PhoneCustomizationStore;
 import com.allyphone.service.PhoneService;
 import com.allyphone.service.SignalService;
 import org.bukkit.Bukkit;
@@ -12,6 +13,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 public class PhoneHomeGUI {
@@ -54,12 +57,20 @@ public class PhoneHomeGUI {
             serviceActive = true;
         }
 
+        PhoneCustomizationStore.Theme theme;
+        try {
+            theme = plugin.getPhoneCustomizationStore().getTheme(player.getUniqueId());
+        } catch (SQLException e) {
+            theme = PhoneCustomizationStore.Theme.BLACK;
+        }
+        Material themeMaterial = Material.matchMaterial(theme.materialName);
+
         PhoneGuiHolder holder = new PhoneGuiHolder();
         Inventory inv = Bukkit.createInventory(holder, 54, "§0§l📱 AllyPhone");
         holder.setInventory(inv);
 
-        // Dark bezel: top status bar, side edges around the app grid, and bottom dock.
-        ItemStack bezel = GuiUtil.icon(Material.BLACK_STAINED_GLASS_PANE, " ");
+        // Themed bezel: top status bar, side edges around the app grid, and bottom dock.
+        ItemStack bezel = GuiUtil.filler(themeMaterial);
         for (int i = 0; i < 9; i++) {
             inv.setItem(i, bezel);
         }
@@ -82,9 +93,13 @@ public class PhoneHomeGUI {
                 serviceActive ? "§a§l● Service Active" : "§c§l● Service Suspended",
                 serviceActive ? "" : "§7Click Pay Bill in Wallet to restore service."));
 
+        List<String> order = resolveOrder(plugin, player, installed);
         int slot = 0;
-        for (PhoneApp app : plugin.getAppRegistry().getAllApps()) {
-            if (!installed.contains(app.getId().toLowerCase()) || slot >= GRID_SLOTS.length) continue;
+        for (String appId : order) {
+            if (slot >= GRID_SLOTS.length) break;
+            PhoneApp app = plugin.getAppRegistry().getApp(appId);
+            if (app == null) continue;
+            if (app.requiredPermission() != null && !player.hasPermission(app.requiredPermission())) continue;
 
             ItemStack icon = GuiUtil.tagged(plugin, app.getIcon(player), GuiUtil.APP_ID_KEY, app.getId());
             inv.setItem(GRID_SLOTS[slot++], icon);
@@ -98,5 +113,24 @@ public class PhoneHomeGUI {
         inv.setItem(50, GuiUtil.icon(Material.LIGHT_GRAY_STAINED_GLASS_PANE, " "));
 
         player.openInventory(inv);
+    }
+
+    /** Installed apps (minus appstore) in the player's saved order, appending any not yet ordered. */
+    private List<String> resolveOrder(AllyPhonePlugin plugin, Player player, Set<String> installed) {
+        List<String> order;
+        try {
+            order = new ArrayList<>(plugin.getPhoneCustomizationStore().getAppOrder(player.getUniqueId()));
+        } catch (SQLException e) {
+            order = new ArrayList<>();
+        }
+        order.removeIf(id -> !installed.contains(id) || id.equals("appstore"));
+        for (PhoneApp app : plugin.getAppRegistry().getAllApps()) {
+            String id = app.getId();
+            if (id.equals("appstore")) continue;
+            if (installed.contains(id) && !order.contains(id)) {
+                order.add(id);
+            }
+        }
+        return order;
     }
 }

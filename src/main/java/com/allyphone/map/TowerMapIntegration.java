@@ -7,6 +7,9 @@ import de.bluecolored.bluemap.api.BlueMapMap;
 import de.bluecolored.bluemap.api.BlueMapWorld;
 import de.bluecolored.bluemap.api.markers.MarkerSet;
 import de.bluecolored.bluemap.api.markers.POIMarker;
+import de.bluecolored.bluemap.api.markers.ShapeMarker;
+import de.bluecolored.bluemap.api.math.Color;
+import de.bluecolored.bluemap.api.math.Shape;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 
@@ -21,6 +24,9 @@ import java.util.Optional;
 public class TowerMapIntegration {
 
     private static final String MARKER_SET_ID = "allyphone-cell-towers";
+    private static final int CIRCLE_EDGES = 64;
+    private static final Color RADIUS_LINE = new Color(0x33_99_FF, 0.9f);
+    private static final Color RADIUS_FILL = new Color(0x33_99_FF, 0.15f);
 
     private final AllyPhonePlugin plugin;
 
@@ -73,6 +79,18 @@ public class TowerMapIntegration {
                             .defaultIcon()
                             .build();
                     set.getMarkers().put("tower-" + tower.id(), marker);
+
+                    // Visual coverage ring, in addition to the radius shown as text on the POI above.
+                    Shape circle = Shape.createCircle(tower.x() + 0.5, tower.z() + 0.5, tower.radius(), CIRCLE_EDGES);
+                    ShapeMarker radiusMarker = ShapeMarker.builder()
+                            .label(tower.name() + " coverage")
+                            .shape(circle, (float) tower.y() + 0.5f)
+                            .lineColor(RADIUS_LINE)
+                            .fillColor(RADIUS_FILL)
+                            .lineWidth(2)
+                            .depthTestEnabled(false)
+                            .build();
+                    set.getMarkers().put("tower-radius-" + tower.id(), radiusMarker);
                 }
                 map.getMarkerSets().put(MARKER_SET_ID, set);
             }

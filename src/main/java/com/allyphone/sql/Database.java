@@ -88,6 +88,13 @@ public class Database {
                         created_at INTEGER NOT NULL
                     )""");
             st.executeUpdate("""
+                    CREATE TABLE IF NOT EXISTS phone_prefs (
+                        uuid TEXT PRIMARY KEY,
+                        theme TEXT NOT NULL DEFAULT 'BLACK',
+                        nickname TEXT,
+                        app_order TEXT NOT NULL DEFAULT ''
+                    )""");
+            st.executeUpdate("""
                     CREATE TABLE IF NOT EXISTS phone_alerts (
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
                         uuid TEXT NOT NULL,

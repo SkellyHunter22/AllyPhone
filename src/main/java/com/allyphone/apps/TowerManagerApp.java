@@ -52,6 +52,13 @@ public class TowerManagerApp implements PhoneApp {
         Inventory inv = Bukkit.createInventory(holder, 54, "§b§lCell Towers");
         holder.setInventory(inv);
 
+        boolean showingCoverage = plugin.getCellTowerVisualizer().isActive(player);
+        inv.setItem(48, GuiUtil.tagged(plugin,
+                GuiUtil.icon(showingCoverage ? Material.ENDER_EYE : Material.ENDER_PEARL,
+                        showingCoverage ? "§aCoverage Overlay: ON" : "§7Coverage Overlay: OFF",
+                        "§7Click to " + (showingCoverage ? "hide" : "show") + " reception rings around you"),
+                GuiUtil.ACTION_KEY, "togglecoverage"));
+
         int slot = 0;
         if (towers.isEmpty()) {
             inv.setItem(4, GuiUtil.icon(Material.BARRIER, "§7No cell towers registered",
