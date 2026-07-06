@@ -2,3 +2,14 @@ phone:
   monthly-cost: 500
   signal-radius: 500
   towers-enabled: true
+
+discord:
+  webhook-url: ""
+
+debug:
+  signal: false
+
+# Servers players can switch to from the phone's "Servers" app (requires a BungeeCord/Velocity proxy).
+servers: []
+#  - name: lobby
+#  - name: survival
