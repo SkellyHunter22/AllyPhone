@@ -1,16 +1,39 @@
 name: AllyPhone
 main: com.allyphone.AllyPhonePlugin
-version: 1.0
+version: 0.8a
 api-version: 1.20
 author: SkellyHunter22
-softdepend: [AlsBanker, Vault]
+softdepend: [AlsBanker, Vault, PlaceholderAPI, Towny, BlueMap, EcoJobs, GPet, GMusic, Quests]
 
 commands:
   phone:
     description: Open your AllyPhone
   sms:
     description: Send an SMS
+    usage: /sms <player> <message>
   phonenews:
     description: Post city news
+    usage: /phonenews <title> | <body>
+    permission: allyphone.news
   celltower:
     description: Manage cell towers
+    usage: /celltower <add|remove|list> [name] [radius]
+    permission: allyphone.celltower
+  atm:
+    description: Manage ATM locations
+    usage: /atm <add|remove|list> [name]
+    permission: allyphone.atm
+  phonealert:
+    description: "Console bridge: push a notification onto a player's phone (called by other plugins)"
+    usage: phonealert <player> <source> <message...>
+    permission: allyphone.alert.push
+
+permissions:
+  allyphone.news:
+    default: op
+  allyphone.celltower:
+    default: op
+  allyphone.atm:
+    default: op
+  allyphone.alert.push:
+    default: op

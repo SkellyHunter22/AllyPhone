@@ -31,10 +31,33 @@ public interface BankingService {
         return Collections.emptyList();
     }
 
+    /**
+     * Savings account summary, for backends that support one (e.g. a future AlsBanker version).
+     * Backends without savings support return an inactive summary.
+     */
+    default SavingsSummary getSavingsSummary(Player player) {
+        return SavingsSummary.NONE;
+    }
+
+    /**
+     * Stock holdings, for backends that support a stock market (e.g. a future AlsBanker version).
+     * Backends without stock support return an empty list.
+     */
+    default List<StockHolding> getStockHoldings(Player player) {
+        return Collections.emptyList();
+    }
+
     record LoanSummary(boolean hasActiveLoan, double outstanding, String nextDueDate, double nextAmountDue) {
         public static final LoanSummary NONE = new LoanSummary(false, 0, null, 0);
     }
 
     record TransactionEntry(String timestamp, String type, double amount, double balanceAfter, String description) {
+    }
+
+    record SavingsSummary(boolean available, double balance, double annualInterestRate) {
+        public static final SavingsSummary NONE = new SavingsSummary(false, 0, 0);
+    }
+
+    record StockHolding(String symbol, int shares, double avgCost, double currentPrice) {
     }
 }
