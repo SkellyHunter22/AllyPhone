@@ -37,3 +37,5 @@ build/
 
 ### Mac OS ###
 .DS_Store
+# Local Claude Code project files (agent configs, session settings) - not part of the plugin
+.claude/

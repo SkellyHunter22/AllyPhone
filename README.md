@@ -7,6 +7,8 @@ A Paper/Bukkit plugin that adds an in-game smartphone item to Minecraft, complet
 - **Main class:** `com.allyphone.AllyPhonePlugin`
 - **Author:** SkellyHunter22
 
+*AI assisted.*
+
 ## Features
 
 - **Phone item & GUI** — right-click the phone item to open a home screen (`PhoneHomeGUI`) styled like a real phone (dark bezel border, status bar, bottom dock), with an installable app grid. The phone item itself uses `CustomModelData` so a resource pack can skin it (see `resourcepack/`).

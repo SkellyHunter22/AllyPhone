@@ -4,6 +4,384 @@
   "texture_data": {
     "allyphone_phone": {
       "textures": "textures/items/allyphone_phone"
+    },
+    "allyphone_icons_active_loan": {
+      "textures": "textures/items/icons/active_loan"
+    },
+    "allyphone_icons_admin_tools_commands": {
+      "textures": "textures/items/icons/admin_tools_commands"
+    },
+    "allyphone_icons_alert_read": {
+      "textures": "textures/items/icons/alert_read"
+    },
+    "allyphone_icons_alert_unread": {
+      "textures": "textures/items/icons/alert_unread"
+    },
+    "allyphone_icons_allyphone_v": {
+      "textures": "textures/items/icons/allyphone_v"
+    },
+    "allyphone_icons_app_installed": {
+      "textures": "textures/items/icons/app_installed"
+    },
+    "allyphone_icons_app_not_installed": {
+      "textures": "textures/items/icons/app_not_installed"
+    },
+    "allyphone_icons_app_store": {
+      "textures": "textures/items/icons/app_store"
+    },
+    "allyphone_icons_apply_for_a_card": {
+      "textures": "textures/items/icons/apply_for_a_card"
+    },
+    "allyphone_icons_ask_it_anything": {
+      "textures": "textures/items/icons/ask_it_anything"
+    },
+    "allyphone_icons_back": {
+      "textures": "textures/items/icons/back"
+    },
+    "allyphone_icons_balance": {
+      "textures": "textures/items/icons/balance"
+    },
+    "allyphone_icons_balance_loans_transactions": {
+      "textures": "textures/items/icons/balance_loans_transactions"
+    },
+    "allyphone_icons_bet": {
+      "textures": "textures/items/icons/bet"
+    },
+    "allyphone_icons_bet_2": {
+      "textures": "textures/items/icons/bet_2"
+    },
+    "allyphone_icons_bezel_theme": {
+      "textures": "textures/items/icons/bezel_theme"
+    },
+    "allyphone_icons_billing_active": {
+      "textures": "textures/items/icons/billing_active"
+    },
+    "allyphone_icons_book": {
+      "textures": "textures/items/icons/book"
+    },
+    "allyphone_icons_buy_manage_pets": {
+      "textures": "textures/items/icons/buy_manage_pets"
+    },
+    "allyphone_icons_celltower_add_remove_list": {
+      "textures": "textures/items/icons/celltower_add_remove_list"
+    },
+    "allyphone_icons_charge_card": {
+      "textures": "textures/items/icons/charge_card"
+    },
+    "allyphone_icons_claim_this_plot": {
+      "textures": "textures/items/icons/claim_this_plot"
+    },
+    "allyphone_icons_coin_flip": {
+      "textures": "textures/items/icons/coin_flip"
+    },
+    "allyphone_icons_coin_flip_dice_rps": {
+      "textures": "textures/items/icons/coin_flip_dice_rps"
+    },
+    "allyphone_icons_commands_tips": {
+      "textures": "textures/items/icons/commands_tips"
+    },
+    "allyphone_icons_compass": {
+      "textures": "textures/items/icons/compass"
+    },
+    "allyphone_icons_coverage_map": {
+      "textures": "textures/items/icons/coverage_map"
+    },
+    "allyphone_icons_coverage_off": {
+      "textures": "textures/items/icons/coverage_off"
+    },
+    "allyphone_icons_coverage_on": {
+      "textures": "textures/items/icons/coverage_on"
+    },
+    "allyphone_icons_credit_card": {
+      "textures": "textures/items/icons/credit_card"
+    },
+    "allyphone_icons_credit_loans": {
+      "textures": "textures/items/icons/credit_loans"
+    },
+    "allyphone_icons_credit_score": {
+      "textures": "textures/items/icons/credit_score"
+    },
+    "allyphone_icons_current_forecast": {
+      "textures": "textures/items/icons/current_forecast"
+    },
+    "allyphone_icons_dice_roll": {
+      "textures": "textures/items/icons/dice_roll"
+    },
+    "allyphone_icons_double_or_nothing": {
+      "textures": "textures/items/icons/double_or_nothing"
+    },
+    "allyphone_icons_ecojobs_is_not_installed": {
+      "textures": "textures/items/icons/ecojobs_is_not_installed"
+    },
+    "allyphone_icons_emerald_block": {
+      "textures": "textures/items/icons/emerald_block"
+    },
+    "allyphone_icons_find_nearest_atm": {
+      "textures": "textures/items/icons/find_nearest_atm"
+    },
+    "allyphone_icons_gmusic_is_not_installed": {
+      "textures": "textures/items/icons/gmusic_is_not_installed"
+    },
+    "allyphone_icons_gpet_is_not_installed": {
+      "textures": "textures/items/icons/gpet_is_not_installed"
+    },
+    "allyphone_icons_hide_pet": {
+      "textures": "textures/items/icons/hide_pet"
+    },
+    "allyphone_icons_home_screen_order": {
+      "textures": "textures/items/icons/home_screen_order"
+    },
+    "allyphone_icons_install_remove_apps": {
+      "textures": "textures/items/icons/install_remove_apps"
+    },
+    "allyphone_icons_installed_core_app": {
+      "textures": "textures/items/icons/installed_core_app"
+    },
+    "allyphone_icons_latest_announcements": {
+      "textures": "textures/items/icons/latest_announcements"
+    },
+    "allyphone_icons_light_gray_stained_glass_pane": {
+      "textures": "textures/items/icons/light_gray_stained_glass_pane"
+    },
+    "allyphone_icons_lightning_rod": {
+      "textures": "textures/items/icons/lightning_rod"
+    },
+    "allyphone_icons_make_a_payment": {
+      "textures": "textures/items/icons/make_a_payment"
+    },
+    "allyphone_icons_manage_your_jobs": {
+      "textures": "textures/items/icons/manage_your_jobs"
+    },
+    "allyphone_icons_manage_your_plots": {
+      "textures": "textures/items/icons/manage_your_plots"
+    },
+    "allyphone_icons_misc_tools_info": {
+      "textures": "textures/items/icons/misc_tools_info"
+    },
+    "allyphone_icons_move_down": {
+      "textures": "textures/items/icons/move_down"
+    },
+    "allyphone_icons_move_up": {
+      "textures": "textures/items/icons/move_up"
+    },
+    "allyphone_icons_my_pets": {
+      "textures": "textures/items/icons/my_pets"
+    },
+    "allyphone_icons_nation_info": {
+      "textures": "textures/items/icons/nation_info"
+    },
+    "allyphone_icons_no_active_loan": {
+      "textures": "textures/items/icons/no_active_loan"
+    },
+    "allyphone_icons_no_alerts": {
+      "textures": "textures/items/icons/no_alerts"
+    },
+    "allyphone_icons_no_atms_registered": {
+      "textures": "textures/items/icons/no_atms_registered"
+    },
+    "allyphone_icons_no_banking_plugin_installed": {
+      "textures": "textures/items/icons/no_banking_plugin_installed"
+    },
+    "allyphone_icons_no_cell_towers_registered": {
+      "textures": "textures/items/icons/no_cell_towers_registered"
+    },
+    "allyphone_icons_no_messages_yet": {
+      "textures": "textures/items/icons/no_messages_yet"
+    },
+    "allyphone_icons_no_news_posted_yet": {
+      "textures": "textures/items/icons/no_news_posted_yet"
+    },
+    "allyphone_icons_no_one_else_is_online": {
+      "textures": "textures/items/icons/no_one_else_is_online"
+    },
+    "allyphone_icons_no_plot_plugin_installed": {
+      "textures": "textures/items/icons/no_plot_plugin_installed"
+    },
+    "allyphone_icons_no_recent_transactions": {
+      "textures": "textures/items/icons/no_recent_transactions"
+    },
+    "allyphone_icons_no_servers_configured": {
+      "textures": "textures/items/icons/no_servers_configured"
+    },
+    "allyphone_icons_no_service": {
+      "textures": "textures/items/icons/no_service"
+    },
+    "allyphone_icons_no_signal": {
+      "textures": "textures/items/icons/no_signal"
+    },
+    "allyphone_icons_now_playing": {
+      "textures": "textures/items/icons/now_playing"
+    },
+    "allyphone_icons_open_jobs_menu": {
+      "textures": "textures/items/icons/open_jobs_menu"
+    },
+    "allyphone_icons_open_quests_menu": {
+      "textures": "textures/items/icons/open_quests_menu"
+    },
+    "allyphone_icons_paper": {
+      "textures": "textures/items/icons/paper"
+    },
+    "allyphone_icons_pay_card": {
+      "textures": "textures/items/icons/pay_card"
+    },
+    "allyphone_icons_pay_phone_bill": {
+      "textures": "textures/items/icons/pay_phone_bill"
+    },
+    "allyphone_icons_phone": {
+      "textures": "textures/items/icons/phone"
+    },
+    "allyphone_icons_phonenews_title_body": {
+      "textures": "textures/items/icons/phonenews_title_body"
+    },
+    "allyphone_icons_play_music": {
+      "textures": "textures/items/icons/play_music"
+    },
+    "allyphone_icons_play_random": {
+      "textures": "textures/items/icons/play_random"
+    },
+    "allyphone_icons_plot_info": {
+      "textures": "textures/items/icons/plot_info"
+    },
+    "allyphone_icons_plotsquared_detected": {
+      "textures": "textures/items/icons/plotsquared_detected"
+    },
+    "allyphone_icons_position": {
+      "textures": "textures/items/icons/position"
+    },
+    "allyphone_icons_put_plot_for_sale": {
+      "textures": "textures/items/icons/put_plot_for_sale"
+    },
+    "allyphone_icons_quests_is_not_installed": {
+      "textures": "textures/items/icons/quests_is_not_installed"
+    },
+    "allyphone_icons_rename_phone": {
+      "textures": "textures/items/icons/rename_phone"
+    },
+    "allyphone_icons_request_a_loan": {
+      "textures": "textures/items/icons/request_a_loan"
+    },
+    "allyphone_icons_resident_info": {
+      "textures": "textures/items/icons/resident_info"
+    },
+    "allyphone_icons_result": {
+      "textures": "textures/items/icons/result"
+    },
+    "allyphone_icons_right_click_your_phone": {
+      "textures": "textures/items/icons/right_click_your_phone"
+    },
+    "allyphone_icons_rock": {
+      "textures": "textures/items/icons/rock"
+    },
+    "allyphone_icons_rock_paper_scissors": {
+      "textures": "textures/items/icons/rock_paper_scissors"
+    },
+    "allyphone_icons_savings": {
+      "textures": "textures/items/icons/savings"
+    },
+    "allyphone_icons_scissors": {
+      "textures": "textures/items/icons/scissors"
+    },
+    "allyphone_icons_see_who_s_online": {
+      "textures": "textures/items/icons/see_who_s_online"
+    },
+    "allyphone_icons_server_online": {
+      "textures": "textures/items/icons/server_online"
+    },
+    "allyphone_icons_server_time": {
+      "textures": "textures/items/icons/server_time"
+    },
+    "allyphone_icons_service_suspended": {
+      "textures": "textures/items/icons/service_suspended"
+    },
+    "allyphone_icons_signal_ok": {
+      "textures": "textures/items/icons/signal_ok"
+    },
+    "allyphone_icons_skip": {
+      "textures": "textures/items/icons/skip"
+    },
+    "allyphone_icons_slot_machine": {
+      "textures": "textures/items/icons/slot_machine"
+    },
+    "allyphone_icons_slots_double_or_nothing": {
+      "textures": "textures/items/icons/slots_double_or_nothing"
+    },
+    "allyphone_icons_sms_player_message": {
+      "textures": "textures/items/icons/sms_player_message"
+    },
+    "allyphone_icons_spawn_to_nation": {
+      "textures": "textures/items/icons/spawn_to_nation"
+    },
+    "allyphone_icons_standing_in": {
+      "textures": "textures/items/icons/standing_in"
+    },
+    "allyphone_icons_stocks": {
+      "textures": "textures/items/icons/stocks"
+    },
+    "allyphone_icons_stop": {
+      "textures": "textures/items/icons/stop"
+    },
+    "allyphone_icons_switch_network_servers": {
+      "textures": "textures/items/icons/switch_network_servers"
+    },
+    "allyphone_icons_system_status_warnings": {
+      "textures": "textures/items/icons/system_status_warnings"
+    },
+    "allyphone_icons_teleport_to_town_spawn": {
+      "textures": "textures/items/icons/teleport_to_town_spawn"
+    },
+    "allyphone_icons_the_ball": {
+      "textures": "textures/items/icons/the_ball"
+    },
+    "allyphone_icons_theme_phone_name_app_order": {
+      "textures": "textures/items/icons/theme_phone_name_app_order"
+    },
+    "allyphone_icons_time": {
+      "textures": "textures/items/icons/time"
+    },
+    "allyphone_icons_toggle": {
+      "textures": "textures/items/icons/toggle"
+    },
+    "allyphone_icons_town_bank": {
+      "textures": "textures/items/icons/town_bank"
+    },
+    "allyphone_icons_town_info": {
+      "textures": "textures/items/icons/town_info"
+    },
+    "allyphone_icons_town_nation_info": {
+      "textures": "textures/items/icons/town_nation_info"
+    },
+    "allyphone_icons_towny_is_not_installed": {
+      "textures": "textures/items/icons/towny_is_not_installed"
+    },
+    "allyphone_icons_track_your_quests": {
+      "textures": "textures/items/icons/track_your_quests"
+    },
+    "allyphone_icons_unclaim_this_plot": {
+      "textures": "textures/items/icons/unclaim_this_plot"
+    },
+    "allyphone_icons_where_am_i": {
+      "textures": "textures/items/icons/where_am_i"
+    },
+    "allyphone_icons_world_spawn": {
+      "textures": "textures/items/icons/world_spawn"
+    },
+    "allyphone_icons_writable_book": {
+      "textures": "textures/items/icons/writable_book"
+    },
+    "allyphone_icons_you_have_no_pets_out_right_now": {
+      "textures": "textures/items/icons/you_have_no_pets_out_right_now"
+    },
+    "allyphone_icons_your_balance": {
+      "textures": "textures/items/icons/your_balance"
+    },
+    "allyphone_icons_your_bed": {
+      "textures": "textures/items/icons/your_bed"
+    },
+    "allyphone_icons_your_location": {
+      "textures": "textures/items/icons/your_location"
+    },
+    "allyphone_icons_your_town": {
+      "textures": "textures/items/icons/your_town"
     }
   }
 }
