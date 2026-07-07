@@ -3,7 +3,6 @@ package com.allyphone.gui;
 import com.allyphone.AllyPhonePlugin;
 import com.allyphone.sql.NewsSQLService;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
@@ -28,19 +27,18 @@ public class NewsGUI {
 
         int slot = 0;
         if (posts.isEmpty()) {
-            inv.setItem(4, GuiUtil.icon(Material.PAPER, "§7No news posted yet"));
+            inv.setItem(4, GuiUtil.icon("no_news_posted_yet", "§7No news posted yet"));
         } else {
             for (NewsSQLService.NewsPost post : posts) {
                 if (slot >= 45) break;
-                inv.setItem(slot++, GuiUtil.icon(Material.PAPER,
-                        "§e" + post.title() + " §7" + format.format(new Date(post.postedAt())),
+                inv.setItem(slot++, GuiUtil.icon("paper", "§e" + post.title() + " §7" + format.format(new Date(post.postedAt())),
                         "§f" + (post.body().length() > 40 ? post.body().substring(0, 37) + "..." : post.body()),
                         "§8by " + post.author()));
             }
         }
 
         inv.setItem(49, GuiUtil.tagged(plugin, GuiUtil.backButton(), GuiUtil.ACTION_KEY, "back"));
-        GuiUtil.addBezel(inv);
+        GuiUtil.addThemedBezel(inv, player);
         player.openInventory(inv);
     }
 }

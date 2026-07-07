@@ -6,7 +6,6 @@ import com.allyphone.gui.GuiUtil;
 import com.allyphone.gui.PhoneGuiHolder;
 import com.allyphone.integration.TownyPlaceholders;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -25,7 +24,7 @@ public class TownyApp implements PhoneApp {
 
     @Override
     public ItemStack getIcon(Player viewer) {
-        return GuiUtil.icon(Material.OAK_DOOR, getDisplayName(), "§7Town & nation info");
+        return GuiUtil.icon("town_nation_info", getDisplayName(), "§7Town & nation info");
     }
 
     @Override
@@ -43,39 +42,39 @@ public class TownyApp implements PhoneApp {
         holder.setInventory(inv);
 
         if (!present) {
-            inv.setItem(13, GuiUtil.icon(Material.BARRIER, "§cTowny is not installed"));
+            inv.setItem(13, GuiUtil.icon("towny_is_not_installed", "§cTowny is not installed"));
             inv.setItem(22, GuiUtil.tagged(plugin, GuiUtil.backButton(), GuiUtil.ACTION_KEY, "back"));
-            GuiUtil.addBezel(inv);
+            GuiUtil.addThemedBezel(inv, player);
             player.openInventory(inv);
             return;
         }
 
         String townInfo = TownyPlaceholders.resolve(player, "%towny_resident_town%", "no town");
         String nationInfo = TownyPlaceholders.resolve(player, "%towny_resident_nation%", "no nation");
-        inv.setItem(4, GuiUtil.icon(Material.OAK_DOOR, "§aYour Town: §f" + townInfo,
+        inv.setItem(4, GuiUtil.icon("your_town", "§aYour Town: §f" + townInfo,
                 "§7Nation: §f" + nationInfo));
 
         inv.setItem(10, GuiUtil.tagged(plugin,
-                GuiUtil.icon(Material.MAP, "§eTown Info", "§7/town"),
+                GuiUtil.icon("town_info", "§eTown Info", "§7/town"),
                 GuiUtil.ACTION_KEY, "command:town"));
         inv.setItem(11, GuiUtil.tagged(plugin,
-                GuiUtil.icon(Material.ENDER_PEARL, "§eTeleport to Town Spawn", "§7/town spawn"),
+                GuiUtil.icon("teleport_to_town_spawn", "§eTeleport to Town Spawn", "§7/town spawn"),
                 GuiUtil.ACTION_KEY, "command:town spawn"));
         inv.setItem(12, GuiUtil.tagged(plugin,
-                GuiUtil.icon(Material.PLAYER_HEAD, "§eResident Info", "§7/resident"),
+                GuiUtil.icon("resident_info", "§eResident Info", "§7/resident"),
                 GuiUtil.ACTION_KEY, "command:resident"));
         inv.setItem(13, GuiUtil.tagged(plugin,
-                GuiUtil.icon(Material.GOLDEN_APPLE, "§eNation Info", "§7/nation"),
+                GuiUtil.icon("nation_info", "§eNation Info", "§7/nation"),
                 GuiUtil.ACTION_KEY, "command:nation"));
         inv.setItem(14, GuiUtil.tagged(plugin,
-                GuiUtil.icon(Material.EMERALD, "§eTown Bank", "§7/town deposit <amount>"),
+                GuiUtil.icon("town_bank", "§eTown Bank", "§7/town deposit <amount>"),
                 GuiUtil.ACTION_KEY, "command:town"));
         inv.setItem(15, GuiUtil.tagged(plugin,
-                GuiUtil.icon(Material.IRON_SWORD, "§eSpawn to Nation", "§7/nation spawn"),
+                GuiUtil.icon("spawn_to_nation", "§eSpawn to Nation", "§7/nation spawn"),
                 GuiUtil.ACTION_KEY, "command:nation spawn"));
 
         inv.setItem(22, GuiUtil.tagged(plugin, GuiUtil.backButton(), GuiUtil.ACTION_KEY, "back"));
-        GuiUtil.addBezel(inv);
+        GuiUtil.addThemedBezel(inv, player);
         player.openInventory(inv);
     }
 }

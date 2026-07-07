@@ -1,13 +1,17 @@
 package com.allyphone.gui;
 
+import com.allyphone.AllyPhonePlugin;
+import com.allyphone.service.PhoneCustomizationStore;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 
+import java.sql.SQLException;
 import java.util.Arrays;
 
 /** Small helper for building the icon ItemStacks used across AllyPhone GUIs. */
@@ -30,6 +34,23 @@ public final class GuiUtil {
         return item;
     }
 
+    /**
+     * Same as {@link #icon(Material, String, String...)} but rendered with one of AllyPhone's own
+     * custom icons instead of a vanilla item texture. {@code customIconKey} must match a model at
+     * assets/allyphone/models/item/icons/&lt;key&gt;.json in the bundled resource pack.
+     */
+    public static ItemStack icon(String customIconKey, String name, String... lore) {
+        ItemStack item = new ItemStack(Material.PAPER);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(name);
+        if (lore.length > 0) {
+            meta.setLore(Arrays.asList(lore));
+        }
+        meta.setItemModel(new NamespacedKey(AllyPhonePlugin.get(), "icons/" + customIconKey));
+        item.setItemMeta(meta);
+        return item;
+    }
+
     public static ItemStack tagged(Plugin plugin, ItemStack item, String key, String value) {
         ItemMeta meta = item.getItemMeta();
         meta.getPersistentDataContainer().set(new NamespacedKey(plugin, key), PersistentDataType.STRING, value);
@@ -45,7 +66,7 @@ public final class GuiUtil {
     }
 
     public static ItemStack backButton() {
-        return icon(Material.ARROW, "§7« Back", "§8Return to home screen");
+        return icon("back", "§7« Back", "§8Return to home screen");
     }
 
     /** Dark bezel filler used to frame GUIs so they read as a phone screen rather than a chest. */
@@ -61,6 +82,17 @@ public final class GuiUtil {
     /** Fills every empty slot in the top and bottom row of an inventory with bezel panes. */
     public static void addBezel(Inventory inv) {
         addBezel(inv, null);
+    }
+
+    /** Same as {@link #addBezel(Inventory)} but using the given player's chosen bezel theme, if any. */
+    public static void addThemedBezel(Inventory inv, Player player) {
+        Material themeMaterial = null;
+        try {
+            PhoneCustomizationStore.Theme theme = AllyPhonePlugin.get().getPhoneCustomizationStore().getTheme(player.getUniqueId());
+            themeMaterial = Material.matchMaterial(theme.materialName);
+        } catch (SQLException ignored) {
+        }
+        addBezel(inv, themeMaterial);
     }
 
     /** Same as {@link #addBezel(Inventory)} but using the given theme material for the panes. */

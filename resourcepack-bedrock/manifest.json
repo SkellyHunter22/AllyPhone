@@ -1,0 +1,17 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "AllyPhone Bedrock Pack",
+    "description": "Custom phone icon for Bedrock (Geyser) players",
+    "uuid": "f8fb5335-2877-456c-9ab6-29d350bdb2f2",
+    "version": [1, 0, 0],
+    "min_engine_version": [1, 21, 0]
+  },
+  "modules": [
+    {
+      "type": "resources",
+      "uuid": "2670b953-87dd-4feb-8d28-afda8ec76ee7",
+      "version": [1, 0, 0]
+    }
+  ]
+}

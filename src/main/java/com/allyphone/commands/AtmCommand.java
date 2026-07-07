@@ -5,12 +5,14 @@ import com.allyphone.service.AtmStore;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 
-public class AtmCommand implements CommandExecutor {
+public class AtmCommand implements CommandExecutor, TabCompleter {
 
     private final AllyPhonePlugin plugin;
 
@@ -29,9 +31,26 @@ public class AtmCommand implements CommandExecutor {
             case "add" -> add(sender, args);
             case "remove" -> remove(sender, args);
             case "list" -> list(sender);
+            case "help" -> CommandHelp.send(sender);
             default -> sender.sendMessage("§cUsage: /atm <add|remove|list> [name]");
         }
         return true;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        if (args.length == 1) {
+            return TabCompleteUtil.filter(List.of("add", "remove", "list", "help"), args[0]);
+        }
+        if (args.length == 2 && args[0].equalsIgnoreCase("remove")) {
+            try {
+                List<String> names = plugin.getAtmStore().getAll().stream().map(AtmStore.Atm::name).toList();
+                return TabCompleteUtil.filter(names, args[1]);
+            } catch (SQLException e) {
+                return Collections.emptyList();
+            }
+        }
+        return Collections.emptyList();
     }
 
     private void add(CommandSender sender, String[] args) {

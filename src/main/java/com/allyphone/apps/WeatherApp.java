@@ -2,7 +2,6 @@ package com.allyphone.apps;
 
 import com.allyphone.api.PhoneApp;
 import com.allyphone.gui.GuiUtil;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -21,7 +20,7 @@ public class WeatherApp implements PhoneApp {
 
     @Override
     public ItemStack getIcon(Player viewer) {
-        return GuiUtil.icon(Material.LIGHT_BLUE_DYE, getDisplayName(), "§7Current forecast");
+        return GuiUtil.icon("current_forecast", getDisplayName(), "§7Current forecast");
     }
 
     @Override

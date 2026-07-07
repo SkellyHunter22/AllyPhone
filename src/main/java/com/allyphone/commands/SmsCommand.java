@@ -7,12 +7,15 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
-public class SmsCommand implements CommandExecutor {
+public class SmsCommand implements CommandExecutor, TabCompleter {
 
     private final AllyPhonePlugin plugin;
 
@@ -22,6 +25,11 @@ public class SmsCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (args.length > 0 && args[0].equalsIgnoreCase("help")) {
+            CommandHelp.send(sender);
+            return true;
+        }
+
         if (!(sender instanceof Player player)) {
             sender.sendMessage("Only players can use this command.");
             return true;
@@ -61,5 +69,14 @@ public class SmsCommand implements CommandExecutor {
             player.sendMessage("§cFailed to send message.");
         }
         return true;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        if (args.length == 1) {
+            List<String> names = Bukkit.getOnlinePlayers().stream().map(Player::getName).toList();
+            return TabCompleteUtil.filter(names, args[0]);
+        }
+        return Collections.emptyList();
     }
 }

@@ -41,14 +41,25 @@ public class AllyPhoneExpansion extends PlaceholderExpansion {
         try {
             return switch (params.toLowerCase()) {
                 case "signal" -> String.valueOf(plugin.getSignalService().getSignalStrength(player));
+                case "signal_bars" -> signalBars(plugin.getSignalService().getSignalStrength(player));
                 case "plan" -> plugin.getServicePlanService().getPlan(player.getUniqueId()).getDisplayName();
                 case "service_active" ->
                         plugin.getServicePlanService().isServiceActive(player.getUniqueId()) ? "yes" : "no";
                 case "unread_messages" -> String.valueOf(plugin.getMessageService().getUnreadCount(player.getUniqueId()));
+                case "unread_alerts" -> String.valueOf(plugin.getAlertService().getUnreadCount(player.getUniqueId()));
+                case "unread_total" -> String.valueOf(plugin.getMessageService().getUnreadCount(player.getUniqueId())
+                        + plugin.getAlertService().getUnreadCount(player.getUniqueId()));
                 default -> null;
             };
         } catch (SQLException e) {
             return "";
         }
+    }
+
+    /** e.g. "§a▮▮▮▯▯" for 3/5 bars, or "§cNo Signal" at 0 - handy for another plugin's HUD config. */
+    private String signalBars(int signal) {
+        return signal > 0
+                ? "§a" + "▮".repeat(signal) + "§7" + "▯".repeat(5 - signal)
+                : "§cNo Signal";
     }
 }

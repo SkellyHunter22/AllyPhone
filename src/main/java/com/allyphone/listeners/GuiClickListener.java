@@ -3,7 +3,9 @@ package com.allyphone.listeners;
 import com.allyphone.AllyPhonePlugin;
 import com.allyphone.api.PhoneApp;
 import com.allyphone.gui.AtmListGUI;
+import com.allyphone.gui.CreditGUI;
 import com.allyphone.gui.GuiUtil;
+import com.allyphone.gui.MessagesGUI;
 import com.allyphone.gui.NoServiceGUI;
 import com.allyphone.gui.PetsListGUI;
 import com.allyphone.gui.PhoneGuiHolder;
@@ -86,8 +88,24 @@ public class GuiClickListener implements Listener {
             payBill(player);
         } else if (action.equals("findatm")) {
             AtmListGUI.open(player);
+        } else if (action.equals("credit")) {
+            CreditGUI.open(player);
+        } else if (action.equals("loanrequest")) {
+            promptAmount(player, "§bType the loan amount to request in chat (or type 'cancel').", "loan request ");
+        } else if (action.equals("loanpay")) {
+            promptAmount(player, "§bType the amount to pay towards your loan in chat (or type 'cancel').", "loan pay ");
+        } else if (action.equals("cardcharge")) {
+            promptAmount(player, "§bType the amount to charge to your card in chat (or type 'cancel').", "creditcard charge ");
+        } else if (action.equals("cardpay")) {
+            promptAmount(player, "§bType the amount to pay towards your card in chat (or type 'cancel').", "creditcard pay ");
         } else if (action.equals("mypets")) {
             PetsListGUI.open(player);
+        } else if (action.equals("8ball")) {
+            com.allyphone.apps.EightBallApp.shake(player);
+        } else if (action.startsWith("arcade:")) {
+            com.allyphone.apps.ArcadeApp.play(player, action.substring("arcade:".length()));
+        } else if (action.startsWith("casino:")) {
+            com.allyphone.apps.CasinoApp.play(player, action.substring("casino:".length()));
         } else if (action.equals("togglecoverage")) {
             toggleCoverage(player);
         } else if (action.startsWith("smsto:")) {
@@ -98,7 +116,21 @@ public class GuiClickListener implements Listener {
             promptRename(player);
         } else if (action.startsWith("reorder:")) {
             reorderApp(player, action.substring("reorder:".length()));
+        } else if (action.startsWith("deletemsg:")) {
+            if (shiftClick) {
+                deleteMessage(player, action.substring("deletemsg:".length()));
+            }
         }
+    }
+
+    private void deleteMessage(Player player, String idText) {
+        try {
+            long id = Long.parseLong(idText);
+            plugin.getMessageSqlService().delete(id, player.getUniqueId());
+        } catch (NumberFormatException | SQLException e) {
+            player.sendMessage("§cFailed to delete message.");
+        }
+        MessagesGUI.open(player);
     }
 
     /** Generic action any app can tag an icon with to run a command as the clicking player. */
@@ -152,6 +184,35 @@ public class GuiClickListener implements Listener {
             } catch (SQLException e) {
                 player.sendMessage("§cFailed to rename your phone: " + e.getMessage());
             }
+        });
+    }
+
+    /** Prompts for a positive dollar amount in chat, then dispatches "<commandPrefix><amount>" as the player. */
+    private void promptAmount(Player player, String prompt, String commandPrefix) {
+        player.closeInventory();
+        player.sendMessage(prompt);
+        plugin.getPendingInputService().await(player.getUniqueId(), text -> {
+            if (!player.isOnline()) return;
+            if (text.equalsIgnoreCase("cancel")) {
+                player.sendMessage("§7Cancelled.");
+                CreditGUI.open(player);
+                return;
+            }
+            double amount;
+            try {
+                amount = Double.parseDouble(text.trim());
+            } catch (NumberFormatException e) {
+                player.sendMessage("§cThat's not a valid amount.");
+                CreditGUI.open(player);
+                return;
+            }
+            if (!Double.isFinite(amount) || amount <= 0) {
+                player.sendMessage("§cAmount must be a positive, finite number.");
+                CreditGUI.open(player);
+                return;
+            }
+            plugin.getServer().dispatchCommand(player, commandPrefix + amount);
+            CreditGUI.open(player);
         });
     }
 

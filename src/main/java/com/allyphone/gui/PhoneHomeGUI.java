@@ -82,14 +82,14 @@ public class PhoneHomeGUI {
         }
 
         int signal = signalService.getSignalStrength(player);
-        inv.setItem(1, GuiUtil.icon(signal > 0 ? Material.LIME_DYE : Material.RED_DYE,
+        inv.setItem(1, GuiUtil.icon(signal > 0 ? "signal_ok" : "no_signal",
                 signal > 0 ? "§a§l📶 Signal: " + signal + "/5" : "§c§l📶 No Signal"));
 
         int unread = plugin.getMessageService().getUnreadCount(player.getUniqueId());
-        inv.setItem(4, GuiUtil.icon(unread > 0 ? Material.WRITABLE_BOOK : Material.PAPER,
+        inv.setItem(4, GuiUtil.icon(unread > 0 ? "alert_unread" : "no_messages_yet",
                 unread > 0 ? "§e§l✉ " + unread + " new message" + (unread == 1 ? "" : "s") : "§7✉ No new messages"));
 
-        inv.setItem(7, GuiUtil.icon(serviceActive ? Material.EMERALD : Material.BARRIER,
+        inv.setItem(7, GuiUtil.icon(serviceActive ? "billing_active" : "service_suspended",
                 serviceActive ? "§a§l● Service Active" : "§c§l● Service Suspended",
                 serviceActive ? "" : "§7Click Pay Bill in Wallet to restore service."));
 
@@ -106,11 +106,11 @@ public class PhoneHomeGUI {
         }
 
         // Home bar / dock, centered like a phone's bottom dock.
-        inv.setItem(48, GuiUtil.icon(Material.LIGHT_GRAY_STAINED_GLASS_PANE, " "));
+        inv.setItem(48, GuiUtil.icon("light_gray_stained_glass_pane", " "));
         inv.setItem(49, GuiUtil.tagged(plugin,
-                GuiUtil.icon(Material.CHEST, "§9🏪 App Store", "§7Install & remove apps"),
+                GuiUtil.icon("app_store", "§9🏪 App Store", "§7Install & remove apps"),
                 GuiUtil.APP_ID_KEY, "appstore"));
-        inv.setItem(50, GuiUtil.icon(Material.LIGHT_GRAY_STAINED_GLASS_PANE, " "));
+        inv.setItem(50, GuiUtil.icon("light_gray_stained_glass_pane", " "));
 
         player.openInventory(inv);
     }

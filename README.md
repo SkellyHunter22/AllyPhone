@@ -2,8 +2,8 @@
 
 A Paper/Bukkit plugin that adds an in-game smartphone item to Minecraft, complete with a signal/cell-tower system, a suite of "apps" (GUIs) styled like a real phone home screen, SMS messaging, city news, and integrations with economy, land-claim, jobs/pets/quests, music, and map plugins.
 
-- **Version:** 0.8a
-- **API version:** 1.20 (Paper `1.20.4-R0.1-SNAPSHOT`)
+- **Version:** 0.9a
+- **API version:** 26.1.2 (Paper `26.1.2.build.72-stable`), Java 25
 - **Main class:** `com.allyphone.AllyPhonePlugin`
 - **Author:** SkellyHunter22
 
@@ -68,7 +68,18 @@ All integrations are soft dependencies — the plugin enables fine without any o
 
 ## Resource Pack
 
-The phone item uses `CustomModelData(1)` on a Paper item so a resource pack can give it a custom icon without affecting normal paper. A starter pack (model override + a placeholder icon) lives in `resourcepack/`; swap the texture at `resourcepack/assets/minecraft/textures/item/allyphone_phone.png` for your own art, then re-zip and host it (see `server.properties`'s `resource-pack`/`resource-pack-sha1`/`require-resource-pack` options to serve it to all players automatically).
+The phone item uses the modern `item_model` component (`ItemMeta#setItemModel`, replacing the old `CustomModelData` + `overrides` predicate trick, which stopped reliably controlling the base item model as of Minecraft 1.21.4+) pointing at `allyphone:item/phone`. The pack source lives in `resourcepack/` (`assets/allyphone/models/item/phone.json` + `assets/allyphone/textures/item/phone.png`); swap the texture for your own art, then rebuild the zip (e.g. `jar cf AllyPhone-ResourcePack.zip pack.mcmeta assets` from inside `resourcepack/`) and also copy it to `src/main/resources/resourcepack.zip` so it gets bundled into the plugin jar for the next point below.
+
+**The pack is bundled and self-hosted** — no external hosting or CDN needed. `ResourcePackHost` extracts the zip bundled inside the plugin jar, serves it over a small built-in HTTP server, and the plugin automatically sends it to each player on join. You only need to set two things in `config.yml`:
+
+```yaml
+resourcepack:
+  enabled: true
+  host: "your.server.ip.or.domain"   # required for anyone off your LAN to receive it
+  port: 8181                          # must be open/forwarded in your firewall
+```
+
+Minecraft clients always fetch resource packs over a real HTTP(S) URL — there's no way to transmit the pack purely through the game protocol — so `host`/`port` must be a genuinely reachable address for your players, same as any other self-hosted resource pack. Set `resourcepack.enabled: false` to turn this off entirely (e.g. if you'd rather host the pack yourself via `server.properties`'s `resource-pack` option instead).
 
 ## Configuration
 

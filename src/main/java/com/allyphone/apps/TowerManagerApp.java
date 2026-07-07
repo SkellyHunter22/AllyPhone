@@ -7,7 +7,6 @@ import com.allyphone.gui.PhoneGuiHolder;
 import com.allyphone.service.CellTowerStore;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -29,7 +28,7 @@ public class TowerManagerApp implements PhoneApp {
 
     @Override
     public ItemStack getIcon(Player viewer) {
-        return GuiUtil.icon(Material.LIGHTNING_ROD, getDisplayName(), "§7Coverage map");
+        return GuiUtil.icon("coverage_map", getDisplayName(), "§7Coverage map");
     }
 
     @Override
@@ -54,14 +53,14 @@ public class TowerManagerApp implements PhoneApp {
 
         boolean showingCoverage = plugin.getCellTowerVisualizer().isActive(player);
         inv.setItem(48, GuiUtil.tagged(plugin,
-                GuiUtil.icon(showingCoverage ? Material.ENDER_EYE : Material.ENDER_PEARL,
+                GuiUtil.icon(showingCoverage ? "coverage_on" : "coverage_off",
                         showingCoverage ? "§aCoverage Overlay: ON" : "§7Coverage Overlay: OFF",
                         "§7Click to " + (showingCoverage ? "hide" : "show") + " reception rings around you"),
                 GuiUtil.ACTION_KEY, "togglecoverage"));
 
         int slot = 0;
         if (towers.isEmpty()) {
-            inv.setItem(4, GuiUtil.icon(Material.BARRIER, "§7No cell towers registered",
+            inv.setItem(4, GuiUtil.icon("no_cell_towers_registered", "§7No cell towers registered",
                     "§7Use §f/celltower add <name> <radius>"));
         } else {
             boolean canRemove = player.hasPermission("allyphone.celltower");
@@ -70,7 +69,7 @@ public class TowerManagerApp implements PhoneApp {
                 double dist = tower.world().equals(player.getWorld().getName())
                         ? player.getLocation().distance(new Location(player.getWorld(), tower.x(), tower.y(), tower.z()))
                         : -1;
-                ItemStack icon = GuiUtil.icon(Material.LIGHTNING_ROD, "§e" + tower.name(),
+                ItemStack icon = GuiUtil.icon("lightning_rod", "§e" + tower.name(),
                         "§7World: " + tower.world(),
                         "§7Radius: " + tower.radius(),
                         dist >= 0 ? "§7Distance: " + (int) dist + " blocks" : "§7(different world)",
@@ -83,7 +82,7 @@ public class TowerManagerApp implements PhoneApp {
         }
 
         inv.setItem(49, GuiUtil.tagged(plugin, GuiUtil.backButton(), GuiUtil.ACTION_KEY, "back"));
-        GuiUtil.addBezel(inv);
+        GuiUtil.addThemedBezel(inv, player);
         player.openInventory(inv);
     }
 }

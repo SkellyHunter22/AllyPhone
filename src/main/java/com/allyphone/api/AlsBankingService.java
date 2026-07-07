@@ -83,4 +83,19 @@ public class AlsBankingService implements BankingService {
                 .map(h -> new StockHolding(h.symbol(), (int) Math.round(h.shares()), h.avgCost(), h.currentPrice()))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public CreditSummary getCreditSummary(Player player) {
+        com.alexander.alsbanker.api.CreditInfo info = api.getCreditInfo(player.getUniqueId());
+        return new CreditSummary(true, info.score(), info.rating(), info.maxLoanAmount());
+    }
+
+    @Override
+    public CreditCardSummary getCreditCardSummary(Player player) {
+        com.alexander.alsbanker.api.CreditCardInfo info = api.getCreditCardInfo(player.getUniqueId());
+        if (!info.available()) {
+            return CreditCardSummary.NONE;
+        }
+        return new CreditCardSummary(true, info.limit(), info.balance(), info.dailyApr());
+    }
 }

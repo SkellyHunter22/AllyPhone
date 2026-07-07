@@ -8,9 +8,13 @@ import com.allyphone.api.VaultBankingService;
 import com.allyphone.apps.AdminApp;
 import com.allyphone.apps.AlertsApp;
 import com.allyphone.apps.AppStoreApp;
+import com.allyphone.apps.ArcadeApp;
+import com.allyphone.apps.CasinoApp;
 import com.allyphone.apps.CustomizeApp;
+import com.allyphone.apps.EightBallApp;
 import com.allyphone.apps.ExtrasApp;
 import com.allyphone.apps.FriendsApp;
+import com.allyphone.apps.GpsApp;
 import com.allyphone.apps.HelpApp;
 import com.allyphone.apps.InstalledAppsStore;
 import com.allyphone.apps.JobsApp;
@@ -54,6 +58,7 @@ import com.allyphone.service.PendingSmsService;
 import com.allyphone.service.PhoneCustomizationStore;
 import com.allyphone.service.PhoneService;
 import com.allyphone.service.PluginLogService;
+import com.allyphone.service.ResourcePackHost;
 import com.allyphone.service.ServicePlanService;
 import com.allyphone.service.SignalDebugTask;
 import com.allyphone.service.SignalService;
@@ -97,6 +102,7 @@ public class AllyPhonePlugin extends JavaPlugin {
     private PhoneCustomizationStore phoneCustomizationStore;
     private TowerMapIntegration towerMapIntegration;
     private CellTowerVisualizer cellTowerVisualizer;
+    private ResourcePackHost resourcePackHost;
 
     private BukkitTask statusBarTask;
     private BukkitTask billingTask;
@@ -141,6 +147,9 @@ public class AllyPhonePlugin extends JavaPlugin {
         pendingInputService = new PendingInputService();
         towerMapIntegration = new TowerMapIntegration(this);
         cellTowerVisualizer = new CellTowerVisualizer(this);
+        resourcePackHost = new ResourcePackHost(this);
+        resourcePackHost.start();
+        com.allyphone.bedrock.GeyserBridge.register(this);
 
         setupBanking();
         setupApps();
@@ -161,6 +170,7 @@ public class AllyPhonePlugin extends JavaPlugin {
         if (billingTask != null) billingTask.cancel();
         if (signalDebugTask != null) signalDebugTask.cancel();
         if (cellTowerVisualizer != null) cellTowerVisualizer.shutdown();
+        if (resourcePackHost != null) resourcePackHost.stop();
         if (database != null) database.close();
         getLogger().info("AllyPhone disabled.");
     }
@@ -217,6 +227,12 @@ public class AllyPhonePlugin extends JavaPlugin {
         appRegistry.registerApp(new HelpApp());
         appRegistry.registerApp(new CustomizeApp());
         appRegistry.registerApp(new AdminApp());
+        appRegistry.registerApp(new EightBallApp());
+        appRegistry.registerApp(new ArcadeApp());
+        appRegistry.registerApp(new GpsApp());
+        if (getConfig().getBoolean("casino.enabled", true)) {
+            appRegistry.registerApp(new CasinoApp());
+        }
     }
 
     private void registerListeners() {
@@ -246,7 +262,9 @@ public class AllyPhonePlugin extends JavaPlugin {
     }
 
     private void scheduleTasks() {
-        statusBarTask = new StatusBarTask(this).runTaskTimer(this, 100L, 100L);
+        // Refreshed well under the ~3s the client keeps an action bar message on screen, so it
+        // never visibly flashes off between resends (see StatusBarTask for details).
+        statusBarTask = new StatusBarTask(this).runTaskTimer(this, 20L, 40L);
         billingTask = new MonthlyBillingTask(this).runTaskTimer(this, 20L * 60, 20L * 60 * 60);
         if (getConfig().getBoolean("debug.signal", false)) {
             signalDebugTask = new SignalDebugTask(this).runTaskTimer(this, 200L, 200L);
@@ -336,5 +354,28 @@ public class AllyPhonePlugin extends JavaPlugin {
 
     public CellTowerVisualizer getCellTowerVisualizer() {
         return cellTowerVisualizer;
+    }
+
+    public ResourcePackHost getResourcePackHost() {
+        return resourcePackHost;
+    }
+
+    /**
+     * Re-reads config.yml and re-applies everything driven by it in-place (resource pack host,
+     * banking backend, which apps are registered) without touching listeners, commands, tasks,
+     * or the plugin's loaded code. Safe to call on a live server; does NOT pick up a replaced jar
+     * file (see PhoneCommand's "full" reload, which hands that off to PlugManX).
+     */
+    public void reloadPluginState() {
+        reloadConfig();
+
+        if (resourcePackHost != null) {
+            resourcePackHost.stop();
+            resourcePackHost = new ResourcePackHost(this);
+            resourcePackHost.start();
+        }
+
+        setupBanking();
+        setupApps();
     }
 }

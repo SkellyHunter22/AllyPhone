@@ -27,7 +27,7 @@ public class FriendsApp implements PhoneApp {
 
     @Override
     public ItemStack getIcon(Player viewer) {
-        return GuiUtil.icon(Material.PLAYER_HEAD, getDisplayName(), "§7See who's online");
+        return GuiUtil.icon("see_who_s_online", getDisplayName(), "§7See who's online");
     }
 
     @Override
@@ -56,11 +56,11 @@ public class FriendsApp implements PhoneApp {
         }
 
         if (slot == 0) {
-            inv.setItem(4, GuiUtil.icon(Material.BARRIER, "§7No one else is online"));
+            inv.setItem(4, GuiUtil.icon("no_one_else_is_online", "§7No one else is online"));
         }
 
         inv.setItem(49, GuiUtil.tagged(plugin, GuiUtil.backButton(), GuiUtil.ACTION_KEY, "back"));
-        GuiUtil.addBezel(inv);
+        GuiUtil.addThemedBezel(inv, player);
         player.openInventory(inv);
     }
 }

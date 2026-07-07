@@ -32,7 +32,7 @@ public class PetsListGUI {
         holder.setInventory(inv);
 
         if (pets.isEmpty()) {
-            inv.setItem(22, GuiUtil.icon(Material.BARRIER, "§7You have no pets out right now",
+            inv.setItem(22, GuiUtil.icon("you_have_no_pets_out_right_now", "§7You have no pets out right now",
                     "§7Buy or spawn one from §eBuy & Manage Pets"));
         } else {
             int slot = 0;
@@ -57,7 +57,7 @@ public class PetsListGUI {
         }
 
         inv.setItem(49, GuiUtil.tagged(plugin, GuiUtil.backButton(), GuiUtil.APP_ID_KEY, "pets"));
-        GuiUtil.addBezel(inv);
+        GuiUtil.addThemedBezel(inv, player);
         player.openInventory(inv);
     }
 

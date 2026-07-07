@@ -5,7 +5,6 @@ import com.allyphone.api.PhoneApp;
 import com.allyphone.gui.GuiUtil;
 import com.allyphone.gui.PhoneGuiHolder;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -24,7 +23,7 @@ public class ExtrasApp implements PhoneApp {
 
     @Override
     public ItemStack getIcon(Player viewer) {
-        return GuiUtil.icon(Material.CHEST_MINECART, getDisplayName(), "§7Misc tools & info");
+        return GuiUtil.icon("misc_tools_info", getDisplayName(), "§7Misc tools & info");
     }
 
     @Override
@@ -39,17 +38,17 @@ public class ExtrasApp implements PhoneApp {
         Inventory inv = Bukkit.createInventory(holder, 27, "§7§lExtras");
         holder.setInventory(inv);
 
-        inv.setItem(10, GuiUtil.icon(Material.NAME_TAG, "§fAllyPhone v" + plugin.getDescription().getVersion(),
+        inv.setItem(10, GuiUtil.icon("allyphone_v", "§fAllyPhone v" + plugin.getDescription().getVersion(),
                 "§7By " + plugin.getDescription().getAuthors()));
-        inv.setItem(12, GuiUtil.icon(Material.CLOCK, "§fServer Time",
+        inv.setItem(12, GuiUtil.icon("server_time", "§fServer Time",
                 "§7" + player.getWorld().getTime() + " ticks"));
-        inv.setItem(14, GuiUtil.icon(Material.COMPASS, "§fYour Location",
+        inv.setItem(14, GuiUtil.icon("your_location", "§fYour Location",
                 "§7X: " + player.getLocation().getBlockX(),
                 "§7Y: " + player.getLocation().getBlockY(),
                 "§7Z: " + player.getLocation().getBlockZ()));
 
         inv.setItem(22, GuiUtil.tagged(plugin, GuiUtil.backButton(), GuiUtil.ACTION_KEY, "back"));
-        GuiUtil.addBezel(inv);
+        GuiUtil.addThemedBezel(inv, player);
         player.openInventory(inv);
     }
 }

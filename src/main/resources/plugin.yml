@@ -1,14 +1,14 @@
 name: AllyPhone
 main: com.allyphone.AllyPhonePlugin
-version: 0.8a
-api-version: 1.20
+version: 0.9a
+api-version: '26.1.2'
 author: SkellyHunter22
-softdepend: [AlsBanker, Vault, PlaceholderAPI, Towny, BlueMap, EcoJobs, GPet, GMusic, Quests]
+softdepend: [AlsBanker, Vault, PlaceholderAPI, Towny, BlueMap, EcoJobs, GPet, GMusic, Quests, Geyser-Spigot]
 
 commands:
   phone:
-    description: Open your AllyPhone, or get one with '/phone get' if you don't have it
-    usage: /phone [get]
+    description: Open your AllyPhone, get one with '/phone get', or reload with '/phone reload [full]'
+    usage: /phone [get|reload [full]]
   sms:
     description: Send an SMS
     usage: /sms <player> <message>
