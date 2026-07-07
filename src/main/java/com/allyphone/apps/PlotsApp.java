@@ -6,7 +6,6 @@ import com.allyphone.gui.GuiUtil;
 import com.allyphone.gui.PhoneGuiHolder;
 import com.allyphone.integration.TownyPlaceholders;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -25,7 +24,7 @@ public class PlotsApp implements PhoneApp {
 
     @Override
     public ItemStack getIcon(Player viewer) {
-        return GuiUtil.icon(Material.GRASS_BLOCK, getDisplayName(), "§7Manage your plots");
+        return GuiUtil.icon("manage_your_plots", getDisplayName(), "§7Manage your plots");
     }
 
     @Override
@@ -49,31 +48,31 @@ public class PlotsApp implements PhoneApp {
             String plotOwner = TownyPlaceholders.resolve(player, "%towny_plot_owner%", "unclaimed");
             String plotName = TownyPlaceholders.resolve(player, "%towny_plot_name%", "-");
 
-            inv.setItem(4, GuiUtil.icon(Material.GRASS_BLOCK, "§aStanding in: §f" + townName,
+            inv.setItem(4, GuiUtil.icon("standing_in", "§aStanding in: §f" + townName,
                     "§7Plot owner: §f" + plotOwner,
                     "§7Plot name: §f" + plotName));
 
             inv.setItem(10, GuiUtil.tagged(plugin,
-                    GuiUtil.icon(Material.PAPER, "§ePlot Info", "§7/plot info"),
+                    GuiUtil.icon("plot_info", "§ePlot Info", "§7/plot info"),
                     GuiUtil.ACTION_KEY, "command:plot info"));
             inv.setItem(12, GuiUtil.tagged(plugin,
-                    GuiUtil.icon(Material.EMERALD, "§eClaim This Plot", "§7/plot claim"),
+                    GuiUtil.icon("claim_this_plot", "§eClaim This Plot", "§7/plot claim"),
                     GuiUtil.ACTION_KEY, "command:plot claim"));
             inv.setItem(14, GuiUtil.tagged(plugin,
-                    GuiUtil.icon(Material.GOLD_NUGGET, "§ePut Plot For Sale", "§7/plot forsale"),
+                    GuiUtil.icon("put_plot_for_sale", "§ePut Plot For Sale", "§7/plot forsale"),
                     GuiUtil.ACTION_KEY, "command:plot forsale"));
             inv.setItem(16, GuiUtil.tagged(plugin,
-                    GuiUtil.icon(Material.BARRIER, "§eUnclaim This Plot", "§7/plot unclaim"),
+                    GuiUtil.icon("unclaim_this_plot", "§eUnclaim This Plot", "§7/plot unclaim"),
                     GuiUtil.ACTION_KEY, "command:plot unclaim"));
         } else if (plotSquaredPresent) {
-            inv.setItem(13, GuiUtil.icon(Material.GRASS_BLOCK, "§aPlotSquared detected",
+            inv.setItem(13, GuiUtil.icon("plotsquared_detected", "§aPlotSquared detected",
                     "§7Use §f/plot §7in-game", "§7to manage your plots."));
         } else {
-            inv.setItem(13, GuiUtil.icon(Material.BARRIER, "§cNo plot plugin installed"));
+            inv.setItem(13, GuiUtil.icon("no_plot_plugin_installed", "§cNo plot plugin installed"));
         }
 
         inv.setItem(22, GuiUtil.tagged(plugin, GuiUtil.backButton(), GuiUtil.ACTION_KEY, "back"));
-        GuiUtil.addBezel(inv);
+        GuiUtil.addThemedBezel(inv, player);
         player.openInventory(inv);
     }
 }

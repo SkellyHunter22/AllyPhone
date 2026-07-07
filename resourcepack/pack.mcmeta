@@ -1,6 +1,9 @@
 {
   "pack": {
-    "pack_format": 22,
+    "pack_format": 84,
+    "supported_formats": [34, 100],
+    "min_format": 34,
+    "max_format": 100,
     "description": "AllyPhone custom item textures"
   }
 }

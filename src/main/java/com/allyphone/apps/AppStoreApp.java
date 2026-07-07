@@ -5,7 +5,6 @@ import com.allyphone.api.PhoneApp;
 import com.allyphone.gui.GuiUtil;
 import com.allyphone.gui.PhoneGuiHolder;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -27,7 +26,7 @@ public class AppStoreApp implements PhoneApp {
 
     @Override
     public ItemStack getIcon(Player viewer) {
-        return GuiUtil.icon(Material.CHEST, getDisplayName(), "§7Install & remove apps");
+        return GuiUtil.icon("install_remove_apps", getDisplayName(), "§7Install & remove apps");
     }
 
     @Override
@@ -62,14 +61,13 @@ public class AppStoreApp implements PhoneApp {
 
             boolean isInstalled = installed.contains(app.getId().toLowerCase());
             if (app.isEssential()) {
-                ItemStack icon = GuiUtil.icon(Material.LIME_WOOL,
-                        app.getDisplayName(),
+                ItemStack icon = GuiUtil.icon("installed_core_app", app.getDisplayName(),
                         "§aInstalled §7(core app)",
                         "§8Cannot be uninstalled");
                 inv.setItem(slot++, icon);
                 continue;
             }
-            ItemStack icon = GuiUtil.icon(isInstalled ? Material.LIME_WOOL : Material.RED_WOOL,
+            ItemStack icon = GuiUtil.icon(isInstalled ? "app_installed" : "app_not_installed",
                     app.getDisplayName(),
                     isInstalled ? "§aInstalled" : "§7Not installed",
                     isInstalled ? "§eClick to uninstall" : "§eClick to install");
@@ -79,7 +77,7 @@ public class AppStoreApp implements PhoneApp {
         }
 
         inv.setItem(44, GuiUtil.tagged(plugin, GuiUtil.backButton(), GuiUtil.ACTION_KEY, "back"));
-        GuiUtil.addBezel(inv);
+        GuiUtil.addThemedBezel(inv, player);
         player.openInventory(inv);
     }
 }

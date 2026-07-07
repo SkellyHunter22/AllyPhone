@@ -30,6 +30,11 @@ public class CompositeBankingService implements BankingService {
     }
 
     @Override
+    public String format(double amount) {
+        return balanceProvider.format(amount);
+    }
+
+    @Override
     public boolean withdraw(Player player, double amount) {
         return balanceProvider.withdraw(player, amount);
     }
@@ -57,5 +62,15 @@ public class CompositeBankingService implements BankingService {
     @Override
     public List<StockHolding> getStockHoldings(Player player) {
         return loanProvider.getStockHoldings(player);
+    }
+
+    @Override
+    public CreditSummary getCreditSummary(Player player) {
+        return loanProvider.getCreditSummary(player);
+    }
+
+    @Override
+    public CreditCardSummary getCreditCardSummary(Player player) {
+        return loanProvider.getCreditCardSummary(player);
     }
 }

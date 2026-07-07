@@ -2,6 +2,15 @@ phone:
   monthly-cost: 500
   signal-radius: 500
   towers-enabled: true
+  # Bars lost while roofed over (indoors, or under a cave ceiling - based on sky light, not time of day).
+  signal-indoor-penalty: 1
+  # Bars lost for every N blocks dug below the surface, up to signal-max-depth-penalty.
+  signal-depth-per-bar: 15
+  signal-max-depth-penalty: 3
+  # Set to false if you'd rather render signal/notifications through another plugin's HUD
+  # (e.g. CustomNameplates' actionbar.yml/bossbar.yml) using the %allyphone_...% placeholders below,
+  # instead of AllyPhone sending its own action bar text - the two would otherwise fight over it.
+  actionbar-enabled: true
 
 discord:
   webhook-url: ""
@@ -9,7 +18,29 @@ discord:
 debug:
   signal: false
 
+# AllyPhone bundles its own resource pack (the phone item's custom model/texture) inside the plugin
+# jar and can self-host it over a tiny built-in HTTP server, so you don't need to upload it anywhere.
+# IMPORTANT: 'host' must be set to your server's actual public IP or domain, and 'port' must be
+# open/forwarded — Minecraft clients always fetch resource packs over a real HTTP(S) URL, there is
+# no way around exposing *some* reachable address. Leaving 'host' blank only works for players on
+# the same machine/LAN as the server.
+resourcepack:
+  enabled: true
+  host: ""
+  port: 8181
+
+# Casino app (slots + double-or-nothing). Wagers real balance via Vault/AlsBanker.
+# Set 'enabled: false' to remove the app entirely if you don't want gambling on your server.
+casino:
+  enabled: true
+  bets: [10.0, 50.0, 100.0, 500.0]
+
 # Servers players can switch to from the phone's "Servers" app (requires a BungeeCord/Velocity proxy).
-servers: []
-#  - name: lobby
-#  - name: survival
+# NOTE: 'name' must match the server's registered name in the proxy config (BungeeCord config.yml /
+# Velocity velocity.toml), not an IP:port — the phone sends a "Connect" plugin message by name only.
+servers:
+  - name: lobby
+  - name: java
+  - name: bedrock
+  - name: creative
+  - name: minilobby

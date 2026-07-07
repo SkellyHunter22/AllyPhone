@@ -5,12 +5,14 @@ import com.allyphone.service.CellTowerStore;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 
-public class CellTowerCommand implements CommandExecutor {
+public class CellTowerCommand implements CommandExecutor, TabCompleter {
 
     private final AllyPhonePlugin plugin;
 
@@ -29,9 +31,31 @@ public class CellTowerCommand implements CommandExecutor {
             case "add" -> add(sender, args);
             case "remove" -> remove(sender, args);
             case "list" -> list(sender);
+            case "help" -> CommandHelp.send(sender);
             default -> sender.sendMessage("§cUsage: /celltower <add|remove|list> [name] [radius]");
         }
         return true;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        if (args.length == 1) {
+            return TabCompleteUtil.filter(List.of("add", "remove", "list", "help"), args[0]);
+        }
+        if (args.length == 2 && args[0].equalsIgnoreCase("remove")) {
+            try {
+                List<String> names = plugin.getCellTowerStore().getAll().stream()
+                        .map(CellTowerStore.CellTower::name).toList();
+                return TabCompleteUtil.filter(names, args[1]);
+            } catch (SQLException e) {
+                return Collections.emptyList();
+            }
+        }
+        if (args.length == 3 && args[0].equalsIgnoreCase("add")) {
+            int defaultRadius = plugin.getConfig().getInt("phone.signal-radius", 500);
+            return TabCompleteUtil.filter(List.of(String.valueOf(defaultRadius)), args[2]);
+        }
+        return Collections.emptyList();
     }
 
     private void add(CommandSender sender, String[] args) {

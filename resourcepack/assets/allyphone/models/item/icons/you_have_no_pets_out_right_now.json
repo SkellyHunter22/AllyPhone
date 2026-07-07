@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "allyphone:item/icons/you_have_no_pets_out_right_now"
+  }
+}

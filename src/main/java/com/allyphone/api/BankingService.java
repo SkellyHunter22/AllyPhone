@@ -11,6 +11,14 @@ public interface BankingService {
 
     double getBalance(Player player);
 
+    /**
+     * Formats an amount using this backend's real currency (e.g. Vault's registered economy
+     * name/symbol), so displayed prices always match what the server's economy plugin actually uses.
+     */
+    default String format(double amount) {
+        return "$" + String.format("%,.2f", amount);
+    }
+
     boolean withdraw(Player player, double amount);
 
     boolean deposit(Player player, double amount);
@@ -47,6 +55,22 @@ public interface BankingService {
         return Collections.emptyList();
     }
 
+    /**
+     * Credit score snapshot, for backends that track one (e.g. AlsBanker). Backends without
+     * credit tracking return a neutral default (see {@link CreditSummary#NONE}).
+     */
+    default CreditSummary getCreditSummary(Player player) {
+        return CreditSummary.NONE;
+    }
+
+    /**
+     * Credit card summary, for backends that support one (e.g. AlsBanker). Backends without
+     * credit card support return an inactive summary.
+     */
+    default CreditCardSummary getCreditCardSummary(Player player) {
+        return CreditCardSummary.NONE;
+    }
+
     record LoanSummary(boolean hasActiveLoan, double outstanding, String nextDueDate, double nextAmountDue) {
         public static final LoanSummary NONE = new LoanSummary(false, 0, null, 0);
     }
@@ -54,10 +78,26 @@ public interface BankingService {
     record TransactionEntry(String timestamp, String type, double amount, double balanceAfter, String description) {
     }
 
-    record SavingsSummary(boolean available, double balance, double annualInterestRate) {
+    record SavingsSummary(boolean available, double balance, double dailyInterestRate) {
         public static final SavingsSummary NONE = new SavingsSummary(false, 0, 0);
     }
 
     record StockHolding(String symbol, int shares, double avgCost, double currentPrice) {
+    }
+
+    record CreditSummary(boolean available, int score, String rating, double maxLoanAmount) {
+        public static final CreditSummary NONE = new CreditSummary(false, 0, "-", 0);
+    }
+
+    record CreditCardSummary(boolean available, double limit, double balance, double dailyApr) {
+        public static final CreditCardSummary NONE = new CreditCardSummary(false, 0, 0, 0);
+
+        public double availableCredit() {
+            return limit - balance;
+        }
+
+        public double utilization() {
+            return limit <= 0 ? 0 : balance / limit;
+        }
     }
 }

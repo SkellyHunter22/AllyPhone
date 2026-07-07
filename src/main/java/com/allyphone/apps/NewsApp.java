@@ -3,7 +3,6 @@ package com.allyphone.apps;
 import com.allyphone.api.PhoneApp;
 import com.allyphone.gui.GuiUtil;
 import com.allyphone.gui.NewsGUI;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -21,7 +20,7 @@ public class NewsApp implements PhoneApp {
 
     @Override
     public ItemStack getIcon(Player viewer) {
-        return GuiUtil.icon(Material.PAPER, getDisplayName(), "§7Latest announcements");
+        return GuiUtil.icon("latest_announcements", getDisplayName(), "§7Latest announcements");
     }
 
     @Override

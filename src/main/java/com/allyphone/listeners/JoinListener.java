@@ -42,6 +42,14 @@ public class JoinListener implements Listener {
                 plugin.getPhoneService().deliverPhone(player);
             }
         }, 1L);
+
+        if (plugin.getResourcePackHost().isReady()) {
+            player.setResourcePack(
+                    plugin.getResourcePackHost().getUrl(),
+                    plugin.getResourcePackHost().getSha1Bytes(),
+                    "§bAllyPhone uses a small resource pack for its phone icon.",
+                    false);
+        }
     }
 
     @EventHandler
@@ -49,5 +57,6 @@ public class JoinListener implements Listener {
         plugin.getCellTowerVisualizer().remove(event.getPlayer());
         plugin.getPendingInputService().cancel(event.getPlayer().getUniqueId());
         plugin.getPendingSmsService().consume(event.getPlayer().getUniqueId());
+        plugin.getPhoneCustomizationStore().evictThemeCache(event.getPlayer().getUniqueId());
     }
 }

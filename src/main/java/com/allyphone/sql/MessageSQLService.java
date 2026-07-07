@@ -54,6 +54,16 @@ public class MessageSQLService {
         }
     }
 
+    /** Deletes a message, but only if it actually belongs to that receiver's inbox. */
+    public synchronized boolean delete(long id, UUID receiver) throws SQLException {
+        try (PreparedStatement ps = database.getConnection().prepareStatement(
+                "DELETE FROM messages WHERE id = ? AND receiver_uuid = ?")) {
+            ps.setLong(1, id);
+            ps.setString(2, receiver.toString());
+            return ps.executeUpdate() > 0;
+        }
+    }
+
     public synchronized void markAllRead(UUID receiver) throws SQLException {
         try (PreparedStatement ps = database.getConnection().prepareStatement(
                 "UPDATE messages SET read = 1 WHERE receiver_uuid = ?")) {

@@ -3,7 +3,6 @@ package com.allyphone.apps;
 import com.allyphone.api.PhoneApp;
 import com.allyphone.gui.GuiUtil;
 import com.allyphone.gui.WalletGUI;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -21,7 +20,7 @@ public class WalletApp implements PhoneApp {
 
     @Override
     public ItemStack getIcon(Player viewer) {
-        return GuiUtil.icon(Material.GOLD_INGOT, getDisplayName(), "§7Balance, loans & transactions");
+        return GuiUtil.icon("balance_loans_transactions", getDisplayName(), "§7Balance, loans & transactions");
     }
 
     @Override

@@ -119,7 +119,7 @@ public class CellTowerVisualizer {
             double pdx = x - playerLoc.getX();
             double pdz = z - playerLoc.getZ();
             if (pdx * pdx + pdz * pdz > visibleRangeSq) continue;
-            player.spawnParticle(Particle.REDSTONE, x, y, z, 1, 0, 0, 0, 0, dust);
+            player.spawnParticle(Particle.DUST, x, y, z, 1, 0, 0, 0, 0, dust);
         }
     }
 }

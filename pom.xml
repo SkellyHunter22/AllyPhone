@@ -7,15 +7,14 @@
 
     <groupId>com.allyphone</groupId>
     <artifactId>AllyPhone</artifactId>
-    <version>0.8a</version>
+    <version>0.9a</version>
     <packaging>jar</packaging>
 
     <name>AllyPhone</name>
     <description>Phone system plugin for Minecraft</description>
 
     <properties>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
+        <maven.compiler.release>25</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -45,7 +44,7 @@
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
-            <version>1.20.4-R0.1-SNAPSHOT</version>
+            <version>26.1.2.build.72-stable</version>
             <scope>provided</scope>
         </dependency>
 
@@ -61,7 +60,7 @@
         <dependency>
             <groupId>com.alexander</groupId>
             <artifactId>alsbanker</artifactId>
-            <version>0.9b</version>
+            <version>0.10</version>
             <scope>provided</scope>
         </dependency>
 
@@ -96,6 +95,14 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- Geyser-Spigot, so Bedrock (via Geyser) players get a custom phone icon too -->
+        <dependency>
+            <groupId>org.geysermc</groupId>
+            <artifactId>geyser-spigot</artifactId>
+            <version>local</version>
+            <scope>provided</scope>
+        </dependency>
+
         <!-- EcoJobs, for the Jobs app -->
         <dependency>
             <groupId>com.willfp</groupId>
@@ -121,8 +128,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.15.0</version>
                 <configuration>
-                    <source>21</source>
-                    <target>21</target>
+                    <release>25</release>
                 </configuration>
             </plugin>
 

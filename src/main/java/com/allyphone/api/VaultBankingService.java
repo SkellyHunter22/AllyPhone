@@ -22,6 +22,11 @@ public class VaultBankingService implements BankingService {
     }
 
     @Override
+    public String format(double amount) {
+        return economy.format(amount);
+    }
+
+    @Override
     public boolean withdraw(Player player, double amount) {
         return economy.withdrawPlayer(player, amount).transactionSuccess();
     }

@@ -34,7 +34,7 @@ public class CustomizeApp implements PhoneApp {
 
     @Override
     public ItemStack getIcon(Player viewer) {
-        return GuiUtil.icon(Material.PAINTING, getDisplayName(), "§7Theme, phone name & app order");
+        return GuiUtil.icon("theme_phone_name_app_order", getDisplayName(), "§7Theme, phone name & app order");
     }
 
     @Override
@@ -63,7 +63,7 @@ public class CustomizeApp implements PhoneApp {
         Inventory inv = Bukkit.createInventory(holder, 54, "§b§lCustomize Phone");
         holder.setInventory(inv);
 
-        inv.setItem(4, GuiUtil.icon(Material.PAINTING, "§b§lBezel Theme", "§7Click a color to apply it"));
+        inv.setItem(4, GuiUtil.icon("bezel_theme", "§b§lBezel Theme", "§7Click a color to apply it"));
         PhoneCustomizationStore.Theme[] themes = PhoneCustomizationStore.Theme.values();
         int[] themeSlots = {10, 11, 12, 13, 14, 15, 16};
         for (int i = 0; i < themes.length && i < themeSlots.length; i++) {
@@ -76,10 +76,10 @@ public class CustomizeApp implements PhoneApp {
         }
 
         inv.setItem(8, GuiUtil.tagged(plugin,
-                GuiUtil.icon(Material.NAME_TAG, "§e§lRename Phone", "§7Click, then type a new name in chat"),
+                GuiUtil.icon("rename_phone", "§e§lRename Phone", "§7Click, then type a new name in chat"),
                 GuiUtil.ACTION_KEY, "renamephone"));
 
-        inv.setItem(18, GuiUtil.icon(Material.ARROW, "§b§lHome Screen Order",
+        inv.setItem(18, GuiUtil.icon("home_screen_order", "§b§lHome Screen Order",
                 "§7Use the arrows below to move an app", "§7left/earlier in your app grid"));
 
         List<String> order = resolveOrder(plugin, player);
@@ -92,12 +92,12 @@ public class CustomizeApp implements PhoneApp {
             inv.setItem(APP_SLOTS[i], app.getIcon(player));
             if (i > 0) {
                 inv.setItem(UP_SLOTS[i], GuiUtil.tagged(plugin,
-                        GuiUtil.icon(Material.LIME_STAINED_GLASS_PANE, "§a▲ Move Up"),
+                        GuiUtil.icon("move_up", "§a▲ Move Up"),
                         GuiUtil.ACTION_KEY, "reorder:" + appId + ":up"));
             }
             if (i < order.size() - 1) {
                 inv.setItem(DOWN_SLOTS[i], GuiUtil.tagged(plugin,
-                        GuiUtil.icon(Material.RED_STAINED_GLASS_PANE, "§c▼ Move Down"),
+                        GuiUtil.icon("move_down", "§c▼ Move Down"),
                         GuiUtil.ACTION_KEY, "reorder:" + appId + ":down"));
             }
         }

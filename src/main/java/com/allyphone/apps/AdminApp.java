@@ -30,7 +30,7 @@ public class AdminApp implements PhoneApp {
 
     @Override
     public ItemStack getIcon(Player viewer) {
-        return GuiUtil.icon(Material.COMMAND_BLOCK, getDisplayName(), "§7Admin tools & commands");
+        return GuiUtil.icon("admin_tools_commands", getDisplayName(), "§7Admin tools & commands");
     }
 
     @Override
@@ -53,23 +53,23 @@ public class AdminApp implements PhoneApp {
 
         // AllyPhone admin commands. The "add" buttons run the bare command so the plugin's
         // own usage message reminds the admin of the required arguments in chat.
-        inv.setItem(10, cmdIcon(plugin, Material.PAPER, "§ePost City News", "§7/phonenews <title> | <body>", "command:phonenews"));
-        inv.setItem(11, cmdIcon(plugin, Material.LODESTONE, "§eList Cell Towers", "§7/celltower list", "command:celltower list"));
-        inv.setItem(12, cmdIcon(plugin, Material.EMERALD_BLOCK, "§eList ATMs", "§7/atm list", "command:atm list"));
-        inv.setItem(13, cmdIcon(plugin, Material.REDSTONE, "§eAdd Cell Tower Here", "§7/celltower add <name> <radius>", "command:celltower add"));
-        inv.setItem(14, cmdIcon(plugin, Material.GOLD_INGOT, "§eAdd ATM Here", "§7/atm add <name>", "command:atm add"));
+        inv.setItem(10, cmdIcon(plugin, Material.PAPER, "§ePost City News", "§7/phonenews <title> | <body>", "phonenews"));
+        inv.setItem(11, cmdIcon(plugin, Material.LODESTONE, "§eList Cell Towers", "§7/celltower list", "celltower list"));
+        inv.setItem(12, cmdIcon(plugin, Material.EMERALD_BLOCK, "§eList ATMs", "§7/atm list", "atm list"));
+        inv.setItem(13, cmdIcon(plugin, Material.REDSTONE, "§eAdd Cell Tower Here", "§7/celltower add <name> <radius>", "celltower add"));
+        inv.setItem(14, cmdIcon(plugin, Material.GOLD_INGOT, "§eAdd ATM Here", "§7/atm add <name>", "atm add"));
 
         // General server admin
-        inv.setItem(28, cmdIcon(plugin, Material.CLOCK, "§bReload Plugins", "§7/reload confirm", "command:reload confirm"));
-        inv.setItem(29, cmdIcon(plugin, Material.BOOK, "§bPlugin List", "§7/plugins", "command:plugins"));
-        inv.setItem(30, cmdIcon(plugin, Material.ENDER_EYE, "§bToggle Vanish", "§7/vanish", "command:vanish"));
-        inv.setItem(31, cmdIcon(plugin, Material.FEATHER, "§bToggle Flight", "§7/fly", "command:fly"));
-        inv.setItem(32, cmdIcon(plugin, Material.GOLDEN_APPLE, "§bHeal Self", "§7/heal", "command:heal"));
-        inv.setItem(33, cmdIcon(plugin, Material.GRASS_BLOCK, "§bCreative Mode", "§7/gamemode creative", "command:gamemode creative"));
-        inv.setItem(34, cmdIcon(plugin, Material.IRON_SWORD, "§bSurvival Mode", "§7/gamemode survival", "command:gamemode survival"));
+        inv.setItem(28, cmdIcon(plugin, Material.CLOCK, "§bReload Plugins", "§7/reload confirm", "reload confirm"));
+        inv.setItem(29, cmdIcon(plugin, Material.BOOK, "§bPlugin List", "§7/plugins", "plugins"));
+        inv.setItem(30, cmdIcon(plugin, Material.ENDER_EYE, "§bToggle Vanish", "§7/vanish", "vanish"));
+        inv.setItem(31, cmdIcon(plugin, Material.FEATHER, "§bToggle Flight", "§7/fly", "fly"));
+        inv.setItem(32, cmdIcon(plugin, Material.GOLDEN_APPLE, "§bHeal Self", "§7/heal", "heal"));
+        inv.setItem(33, cmdIcon(plugin, Material.GRASS_BLOCK, "§bCreative Mode", "§7/gamemode creative", "gamemode creative"));
+        inv.setItem(34, cmdIcon(plugin, Material.IRON_SWORD, "§bSurvival Mode", "§7/gamemode survival", "gamemode survival"));
 
         inv.setItem(49, GuiUtil.tagged(plugin, GuiUtil.backButton(), GuiUtil.ACTION_KEY, "back"));
-        GuiUtil.addBezel(inv);
+        GuiUtil.addThemedBezel(inv, player);
         player.openInventory(inv);
     }
 

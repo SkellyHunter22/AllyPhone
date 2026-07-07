@@ -4,7 +4,6 @@ import com.allyphone.AllyPhonePlugin;
 import com.allyphone.api.PhoneApp;
 import com.allyphone.gui.GuiUtil;
 import com.allyphone.gui.MessagesGUI;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -23,7 +22,7 @@ public class MessagesApp implements PhoneApp {
     @Override
     public ItemStack getIcon(Player viewer) {
         int unread = AllyPhonePlugin.get().getMessageService().getUnreadCount(viewer.getUniqueId());
-        return GuiUtil.icon(Material.WRITABLE_BOOK, getDisplayName(),
+        return GuiUtil.icon("writable_book", getDisplayName(),
                 unread > 0 ? "§e" + unread + " unread" : "§7No new messages");
     }
 

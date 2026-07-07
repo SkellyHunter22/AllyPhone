@@ -22,7 +22,8 @@ import java.util.List;
 public final class PhoneItem {
 
     private static final String KEY_NAME = "phone";
-    private static final int CUSTOM_MODEL_DATA = 1;
+    /** References assets/allyphone/models/item/phone.json in the bundled resource pack. */
+    private static final String ITEM_MODEL_KEY = "phone";
 
     private PhoneItem() {
     }
@@ -38,7 +39,7 @@ public final class PhoneItem {
 
         meta.setDisplayName(nickname != null && !nickname.isBlank() ? "§f§l" + nickname : "§f§lAllyPhone 67 Pro Max");
         meta.setLore(baseLore());
-        meta.setCustomModelData(CUSTOM_MODEL_DATA);
+        meta.setItemModel(new NamespacedKey(plugin, ITEM_MODEL_KEY));
         meta.getPersistentDataContainer().set(key(plugin), PersistentDataType.BYTE, (byte) 1);
 
         item.setItemMeta(meta);
@@ -73,10 +74,10 @@ public final class PhoneItem {
         List<String> lore = new ArrayList<>(baseLore());
         if (unreadCount > 0) {
             lore.add("§c§l● " + unreadCount + " new message" + (unreadCount == 1 ? "" : "s"));
-            meta.addEnchant(Enchantment.DURABILITY, 1, true);
+            meta.addEnchant(Enchantment.UNBREAKING, 1, true);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         } else {
-            meta.removeEnchant(Enchantment.DURABILITY);
+            meta.removeEnchant(Enchantment.UNBREAKING);
         }
         meta.setLore(lore);
         item.setItemMeta(meta);

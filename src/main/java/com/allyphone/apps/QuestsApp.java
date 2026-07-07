@@ -5,7 +5,6 @@ import com.allyphone.api.PhoneApp;
 import com.allyphone.gui.GuiUtil;
 import com.allyphone.gui.PhoneGuiHolder;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -25,7 +24,7 @@ public class QuestsApp implements PhoneApp {
 
     @Override
     public ItemStack getIcon(Player viewer) {
-        return GuiUtil.icon(Material.WRITTEN_BOOK, getDisplayName(), "§7Track your quests");
+        return GuiUtil.icon("track_your_quests", getDisplayName(), "§7Track your quests");
     }
 
     @Override
@@ -44,14 +43,14 @@ public class QuestsApp implements PhoneApp {
 
         if (present) {
             inv.setItem(13, GuiUtil.tagged(plugin,
-                    GuiUtil.icon(Material.WRITTEN_BOOK, "§eOpen Quests Menu", "§7Click to open Quests"),
+                    GuiUtil.icon("open_quests_menu", "§eOpen Quests Menu", "§7Click to open Quests"),
                     GuiUtil.ACTION_KEY, "command:quests"));
         } else {
-            inv.setItem(13, GuiUtil.icon(Material.BARRIER, "§cQuests is not installed"));
+            inv.setItem(13, GuiUtil.icon("quests_is_not_installed", "§cQuests is not installed"));
         }
 
         inv.setItem(22, GuiUtil.tagged(plugin, GuiUtil.backButton(), GuiUtil.ACTION_KEY, "back"));
-        GuiUtil.addBezel(inv);
+        GuiUtil.addThemedBezel(inv, player);
         player.openInventory(inv);
     }
 }

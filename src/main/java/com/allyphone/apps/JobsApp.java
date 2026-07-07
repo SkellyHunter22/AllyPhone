@@ -5,7 +5,6 @@ import com.allyphone.api.PhoneApp;
 import com.allyphone.gui.GuiUtil;
 import com.allyphone.gui.PhoneGuiHolder;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -28,7 +27,7 @@ public class JobsApp implements PhoneApp {
 
     @Override
     public ItemStack getIcon(Player viewer) {
-        return GuiUtil.icon(Material.IRON_PICKAXE, getDisplayName(), "§7Manage your jobs");
+        return GuiUtil.icon("manage_your_jobs", getDisplayName(), "§7Manage your jobs");
     }
 
     @Override
@@ -47,14 +46,14 @@ public class JobsApp implements PhoneApp {
 
         if (present) {
             inv.setItem(13, GuiUtil.tagged(plugin,
-                    GuiUtil.icon(Material.IRON_PICKAXE, "§eOpen Jobs Menu", "§7Click to open EcoJobs"),
+                    GuiUtil.icon("open_jobs_menu", "§eOpen Jobs Menu", "§7Click to open EcoJobs"),
                     GuiUtil.ACTION_KEY, "command:jobs"));
         } else {
-            inv.setItem(13, GuiUtil.icon(Material.BARRIER, "§cEcoJobs is not installed"));
+            inv.setItem(13, GuiUtil.icon("ecojobs_is_not_installed", "§cEcoJobs is not installed"));
         }
 
         inv.setItem(22, GuiUtil.tagged(plugin, GuiUtil.backButton(), GuiUtil.ACTION_KEY, "back"));
-        GuiUtil.addBezel(inv);
+        GuiUtil.addThemedBezel(inv, player);
         player.openInventory(inv);
     }
 }

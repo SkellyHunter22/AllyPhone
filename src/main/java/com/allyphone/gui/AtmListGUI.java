@@ -3,7 +3,6 @@ package com.allyphone.gui;
 import com.allyphone.AllyPhonePlugin;
 import com.allyphone.service.AtmStore;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
@@ -37,14 +36,14 @@ public class AtmListGUI {
         holder.setInventory(inv);
 
         if (atms.isEmpty()) {
-            inv.setItem(13, GuiUtil.icon(Material.BARRIER, "§7No ATMs registered",
+            inv.setItem(13, GuiUtil.icon("no_atms_registered", "§7No ATMs registered",
                     "§7Ask a staff member to add one", "§7with /atm add <name>"));
         } else {
             int slot = 0;
             for (AtmStore.Atm atm : atms) {
                 if (slot >= 18) break;
                 double dist = distance(player, atm);
-                inv.setItem(slot++, GuiUtil.icon(Material.EMERALD_BLOCK, "§a" + atm.name(),
+                inv.setItem(slot++, GuiUtil.icon("emerald_block", "§a" + atm.name(),
                         "§7World: " + atm.world(),
                         "§7Coords: " + atm.x() + ", " + atm.y() + ", " + atm.z(),
                         dist >= 0 ? "§7Distance: " + (int) dist + " blocks" : "§7(different world)"));
@@ -52,7 +51,7 @@ public class AtmListGUI {
         }
 
         inv.setItem(22, GuiUtil.tagged(plugin, GuiUtil.backButton(), GuiUtil.APP_ID_KEY, "wallet"));
-        GuiUtil.addBezel(inv);
+        GuiUtil.addThemedBezel(inv, player);
         player.openInventory(inv);
     }
 

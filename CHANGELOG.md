@@ -4,9 +4,14 @@ All notable changes to AllyPhone will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## [0.8a] - Unreleased
+## [0.9a] - Unreleased
 
 ### Added
+- New Casino app (`CasinoApp`, §4🎰): a slot machine and a double-or-nothing coin flip wagering through Vault/AlsBanker, with bet amounts and an on/off switch configurable via `casino.*` in `config.yml`.
+- Three dependency-free fun apps: Magic 8-Ball (`EightBallApp`), Arcade (`ArcadeApp`: coin flip, dice, rock-paper-scissors), and GPS (`GpsApp`: coordinates, facing, biome, in-game clock, distance to spawn/bed).
+- Credit score, loans, and credit cards (via AlsBanker 0.10's new `getCreditInfo`/`getCreditCardInfo`): a new "Credit & Loans" screen (`CreditGUI`) reachable from Wallet, with Request Loan / Make a Payment / Apply for a Card / Charge Card / Pay Card actions (chat-prompted amounts, dispatched as the real `/loan`/`/creditcard` commands so AlsBanker's own server-side limits/validation still apply).
+- Every phone screen now applies the player's chosen bezel theme from `CustomizeApp` (`GuiUtil.addThemedBezel`) — previously only the home screen and the theme picker itself did, so the rest of the phone silently ignored the player's customization.
+- The phone's resource pack (item texture) is now bundled directly inside the plugin jar and self-hosted over a small built-in HTTP server (`ResourcePackHost`), auto-sent to players on join — no external hosting needed, just set `resourcepack.host`/`port` in `config.yml` to a reachable address.
 - `/phone get` delivers a phone to a player who doesn't have one (without opening the GUI).
 - New `AdminApp` (§c🛠 Admin, `allyphone.admin`): one-click buttons for this plugin's own admin commands plus common server-admin actions (reload, vanish, fly, gamemode, heal, plugin list).
 - New `CustomizeApp` (§b🎨 Customize): players can pick a bezel theme color, rename their phone item, and reorder their installed apps on the home screen — backed by a new `phone_prefs` table and `PhoneCustomizationStore`.
